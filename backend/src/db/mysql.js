@@ -19,9 +19,9 @@ const all = (table) => {
     });
 };
 
-const create = (table, data) => {
+const create = (table, columns, data) => {
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} SET ${data}`, (error, results) => {
+        connection.query(`INSERT INTO ${table} (${columns}) VALUES (${data})`, (error, results) => {
             if (error) {
                 return reject(error);
             }

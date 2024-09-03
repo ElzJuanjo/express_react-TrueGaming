@@ -15,13 +15,28 @@ all.get('/:table', (req, res) => {
         });
 });
 
-const read = express.Router()
+const read = express.Router();
 
 read.get('/:table/:column/:id', (req, res) => {
     const table = req.params.table;
     const column = req.params.column;
-    const id = req.params.id;
-    const connect = controller.read(table, column, id)
+    const id = decodeURIComponent(req.params.id);
+    controller.read(table, column, id)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
+const create = express.Router();
+
+create.post('/:table/:columns/:data', (req, res) => {
+    const table = req.params.table;
+    const columns = req.params.columns;
+    const data = decodeURIComponent(req.params.data);
+    controller.create(table, columns, data)
         .then(answer => {
             success(req, res, answer, 200);
         })
@@ -32,5 +47,6 @@ read.get('/:table/:column/:id', (req, res) => {
 
 export const routes = {
     all,
-    read
+    read,
+    create
 };

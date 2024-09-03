@@ -4,8 +4,9 @@ const all = (table) => {
     return crud.all(table);
 };
 
-const create = (table, data) => {
-    return crud.create(table, data);
+const create = (table, columns, data) => {
+    const newData = data.split(',').map(item => `'${item}'`).join(',');
+    return crud.create(table, columns, newData);
 };
 
 const read = (table, column, id) => {

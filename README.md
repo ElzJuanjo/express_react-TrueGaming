@@ -7,6 +7,7 @@
 * nodemon
 * dotenv
 * cors
+* bcrypt
 
 ###### Frontend:
 
@@ -17,6 +18,6 @@
 
 ###### Instalar dependencias: ``npm i <module>``
 
-###### Iniciar servidor: ``nodejs index.js``
+###### Iniciar servidor: ``nodejs index.js | npm run start``
 
 ###### Iniciar web: ``npm start``
