@@ -13,12 +13,12 @@ const read = (table, column, id) => {
     return crud.read(table, column, id);
 };
 
-const update = (table, data, id) => {
-    return crud.update(table, data, id);
+const update = (table, column, data, reference, id) => {
+    return crud.update(table, column, data, reference, id);
 };
 
-const del = (table, id) => {
-    return crud.del(table, id);
+const del = (table, column, id) => {
+    return crud.del(table, column, id);
 };
 
 export const controller = {

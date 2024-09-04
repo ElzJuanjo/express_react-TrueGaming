@@ -1,24 +1,17 @@
-## DEPENDENCIAS
+## VERSIONES
 
-###### Backend:
+#### ALPHA 1.0
 
-* express
-* pg
-* nodemon
-* dotenv
-* cors
-* bcrypt
-* nodemailer
-* crypto
-
-###### Frontend:
-
-* react-router-dom
-* --save-dev @babel/plugin-proposal-private-property-in-object
+* Conexión con base de datos
+* Verificación de correo
+* Mensaje de seguridad
+* Encriptamiento de contraseña
+* Registro, Login y Recuperar Cuenta
+* Página Index
 
 ## COMANDOS
 
-###### Instalar dependencias: ``npm i <module>``
+###### Instalar dependencias: ``npm install``
 
 ###### Iniciar servidor: ``nodejs index.js | npm run start``
 

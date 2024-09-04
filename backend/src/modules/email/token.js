@@ -27,7 +27,7 @@ const sendEmail = async (receiver, title, content) => {
 
 const generateToken = () => crypto.randomBytes(8).toString('hex');
 
-const html = (tokenGenerated) => `
+const htmlToken = (tokenGenerated) => `
             <div style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px;">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
@@ -57,8 +57,8 @@ const html = (tokenGenerated) => `
             </div>
 `;
 
-const execute = async (receiver, title, tokenGenerated) => {
-    const content = html(tokenGenerated);
+const executeToken = async (receiver, title, tokenGenerated) => {
+    const content = htmlToken(tokenGenerated);
     await sendEmail(receiver, title, content);
 }
 
@@ -69,7 +69,7 @@ sendToken.post('/:email/:title', (req, res) => {
     const title = req.params.title;
     const tokenGenerated = generateToken();
 
-    execute(email, title, tokenGenerated)
+    executeToken(email, title, tokenGenerated)
         .then(answer => {
             const response = {
                 data: {
@@ -84,6 +84,44 @@ sendToken.post('/:email/:title', (req, res) => {
         });
 });
 
-export const token = {
-    sendToken
+const htmlChange = `
+            <div style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" style="padding: 20px 0;">
+                            <table width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); padding: 30px;">
+                                <tr>
+                                    <td align="center" style="font-size: 24px; color: #2c3e50; padding-bottom: 20px;">
+                                        <img src="https://i.ibb.co/Gp2wwkY/logo.png" alt="True Gaming" style="max-width: 200px; margin-bottom: 20px;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 16px; color: #7f8c8d; text-align: center; padding-bottom: 30px;">
+                                        Se ha cambiado tu contraseña.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+`;
+
+const sendChange = express.Router();
+sendChange.post('/:email/:title', async (req, res) => {
+    const email = decodeURIComponent(req.params.email);
+    const title = req.params.title;
+
+    await sendEmail(email, title, htmlChange)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
+export const sendEmails = {
+    sendToken,
+    sendChange
 };

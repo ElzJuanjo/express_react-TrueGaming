@@ -42,9 +42,9 @@ const read = (table, column, id) => {
     });
 };
 
-const update = (table, data, id) => {
+const update = (table, column, data, reference, id) => {
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE ${table} SET ${data} WHERE id = ${id}`, (error, results) => {
+        connection.query(`UPDATE ${table} SET ${column} = '${data}' WHERE ${reference} = '${id}'`, (error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -53,9 +53,9 @@ const update = (table, data, id) => {
     });
 };
 
-const del = (table, id) => {
+const del = (table, column, id) => {
     return new Promise((resolve, reject) => {
-        connection.query(`DELETE FROM ${table} WHERE id = ${id}`, (error, results) => {
+        connection.query(`DELETE FROM ${table} WHERE ${column} = '${id}'`, (error, results) => {
             if (error) {
                 return reject(error);
             }

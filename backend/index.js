@@ -3,7 +3,7 @@ import cors from "cors";
 import { config } from './src/config.js';
 import { routes } from "./src/modules/routes.js";
 import { encrypt } from "./src/modules/encrypt.js";
-import { token } from "./src/modules/email/token.js";
+import { sendEmails } from "./src/modules/email/token.js";
 
 const app = express();
 
@@ -16,9 +16,15 @@ app.listen(app.get("port"), () => {
 });
 
 // Rutas
+// CRUD
 app.use('/all', routes.all);
 app.use('/read', routes.read);
 app.use('/create', routes.create);
+app.use('/update', routes.update);
+app.use('/delete', routes.del);
+
+// SECURE
 app.use('/encrypt', encrypt.encrypted);
 app.use('/verify', encrypt.verify);
-app.use('/token', token.sendToken);
+app.use('/token', sendEmails.sendToken);
+app.use('/change', sendEmails.sendChange);
