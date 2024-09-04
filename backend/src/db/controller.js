@@ -1,4 +1,4 @@
-import { crud } from "./mysql.js";
+import { crud } from "./db.js";
 
 const all = (table) => {
     return crud.all(table);

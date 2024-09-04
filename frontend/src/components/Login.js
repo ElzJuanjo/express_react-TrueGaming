@@ -5,12 +5,19 @@ import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
+    // FORMULARIO
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [message, setMessage] = useState('');
+
+    // VERIFICACIÓN CORREO
     const [enableToken, setEnableToken] = useState(false);
     const [tokenSended, setTokenSended] = useState(null);
     const [token, setToken] = useState('');
+
+    // PREVENCIÓN PYPASS
+    const [key, setKey] = useState('');
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -52,11 +59,12 @@ export const Login = () => {
                     method: 'POST'
                 }).then(async answer => {
                     const info = await answer.json();
-                    return info.message;
+                    return info.data;
                 }).catch(err => null);
 
                 if (response) {
-                    setTokenSended(response);
+                    setTokenSended(response.message);
+                    setKey(response.email);
                     setEnableToken(true);
                     setMessage('Revisa tu correo. Hemos enviado una verificación para que recuperes tu cuenta.');
                 } else {
@@ -74,7 +82,7 @@ export const Login = () => {
     const verifyToken = (e) => {
         e.preventDefault();
         if (token === tokenSended) {
-            navigate('/recoverPass');
+            navigate('/recoverPass', { state: { email: key } });
         } else {
             setMessage('El token ingresado no coincide con el enviado.')
         }

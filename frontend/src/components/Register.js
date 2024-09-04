@@ -5,14 +5,22 @@ import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
 
+    // FORMULARIO
     const [nickname, setNickname] = useState('');
     const [correo, setCorreo] = useState('');
     const [contrasena1, setContrasena1] = useState('');
     const [contrasena2, setContrasena2] = useState('');
     const [message, setMessage] = useState('');
+
+    // VERIFICACIÓN CORREO
     const [enableToken, setEnableToken] = useState(false);
     const [token, setToken] = useState('');
     const [tokenSended, setTokenSended] = useState(null);
+
+    // PREVENCIÓN BYPASS
+    const [key, setKey] = useState('');
+    const [user, setUser] = useState('');
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -32,17 +40,21 @@ export const Register = () => {
                 if (verifyUser) {
                     setMessage('Este nombre de usuario ya se encuentra en uso.')
                 } else {
+                    setMessage('Por favor, espera un momento...');
+                    setUser(nickname);
+
                     id = encodeURIComponent(correo);
                     const title = 'Verificación de Registro';
                     const response = await fetch(`http://localhost:4000/token/${id}/${title}`, {
                         method: 'POST'
                     }).then(async answer => {
-                        const info = await answer.json();
-                        return info.message;
+                        const info = await answer.json()
+                        return info.data;
                     }).catch(err => null);
 
                     if (response) {
-                        setTokenSended(response);
+                        setTokenSended(response.message);
+                        setKey(response.email);
                         setMessage('Revisa tu correo. Hemos enviado una verificación para que completes tu registro.');
                         setEnableToken(true);
                         const boton = document.getElementById('registerButton');
@@ -65,7 +77,7 @@ export const Register = () => {
             const encrypted = await fetch(`http://localhost:4000/encrypt/${contrasena1}`)
                 .then(data => data.json()).catch(err => null);
             const pass = encrypted.message;
-            let info = `${correo},${nickname},${pass}`;
+            let info = `${key},${user},${pass}`;
             info = encodeURIComponent(info);
             await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena/${info}`, {
                 method: 'POST'

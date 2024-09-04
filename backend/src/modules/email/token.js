@@ -72,7 +72,10 @@ sendToken.post('/:email/:title', (req, res) => {
     execute(email, title, tokenGenerated)
         .then(answer => {
             const response = {
-                message: tokenGenerated
+                data: {
+                    message: tokenGenerated,
+                    email: email
+                }
             };
             success(req, res, response, 200);
         })

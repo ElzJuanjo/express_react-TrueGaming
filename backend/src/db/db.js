@@ -1,11 +1,12 @@
-import mysql from "mysql";
+import pg from "pg";
 import { config } from "../config.js";
 
-const connection = mysql.createPool({
-    host: config.mysql.host,
-    user: config.mysql.user,
-    password: config.mysql.password,
-    database: config.mysql.database
+const connection = new pg.Pool({
+    host: config.db.host,
+    port: config.db.port,
+    user: config.db.user,
+    password: config.db.password,
+    database: config.db.database
 });
 
 const all = (table) => {
@@ -36,7 +37,7 @@ const read = (table, column, id) => {
             if (error) {
                 return reject(error);
             }
-            resolve(results[0]);
+            resolve(results);
         });
     });
 };

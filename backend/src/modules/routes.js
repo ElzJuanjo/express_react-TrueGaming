@@ -8,7 +8,7 @@ all.get('/:table', (req, res) => {
     const table = req.params.table;
     controller.all(table)
         .then(answer => {
-            success(req, res, answer, 200);
+            success(req, res, answer.rows, 200);
         })
         .catch(error => {
             reject(req, res, error, 500);
@@ -22,8 +22,8 @@ read.get('/:table/:column/:id', (req, res) => {
     const column = req.params.column;
     const id = decodeURIComponent(req.params.id);
     controller.read(table, column, id)
-        .then(answer => {
-            success(req, res, answer, 200);
+        .then(async answer => {
+            success(req, res, answer.rows[0], 200);
         })
         .catch(error => {
             reject(req, res, error, 500);

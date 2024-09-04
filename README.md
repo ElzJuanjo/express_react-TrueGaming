@@ -3,7 +3,7 @@
 ###### Backend:
 
 * express
-* mysql
+* pg
 * nodemon
 * dotenv
 * cors
