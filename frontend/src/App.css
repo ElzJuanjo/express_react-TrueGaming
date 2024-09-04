@@ -71,6 +71,7 @@ main {
   max-width: 70vw;
   transition: opacity 1s ease;
   box-shadow: 0 0 5px black;
+  opacity: 0; /* Dejar pa que funcione el carrusel */
 }
 
 #slider2 {

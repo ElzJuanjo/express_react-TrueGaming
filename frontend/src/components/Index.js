@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Footer } from './Footer'
 import { HeaderIndex } from './HeaderIndex'
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 export const Index = () => {
-    function slide() {
-        if (document.getElementById("slider1").style.opacity === 1) {
-            document.getElementById("slider1").style.opacity = 0
-            document.getElementById("slider2").style.opacity = 1
-        } else {
-            document.getElementById("slider1").style.opacity = 1
-            document.getElementById("slider2").style.opacity = 0
-        }
+    const [image, setImage] = useState('slider1');
+    const changeImage = () => {
+        const gallery = ['slider1', 'slider2'];
+        const nextIndex = (gallery.indexOf(image) + 1) % gallery.length;
+        document.getElementById(image).style.opacity = 1;
+        setImage(gallery[nextIndex]);
     }
+    useEffect(() => {
+        document.getElementById(image).style.opacity = 0;
+    }, [image]);
 
-    setInterval(slide, 5000);
+    // No usar setInterval, se sobrecarga porque el componente se mantiene en un hilo :P
+    setTimeout(changeImage, 8000);
 
     return (
         <div>

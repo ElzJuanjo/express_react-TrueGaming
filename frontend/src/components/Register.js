@@ -40,6 +40,8 @@ export const Register = () => {
                 if (verifyUser) {
                     setMessage('Este nombre de usuario ya se encuentra en uso.')
                 } else {
+                    const boton = document.getElementById('registerButton');
+                    boton.disabled = true;
                     setMessage('Por favor, espera un momento...');
                     setUser(nickname);
 
@@ -57,10 +59,9 @@ export const Register = () => {
                         setKey(response.email);
                         setMessage('Revisa tu correo. Hemos enviado una verificación para que completes tu registro.');
                         setEnableToken(true);
-                        const boton = document.getElementById('registerButton');
-                        boton.disabled = true;
                         boton.style = "background: #505050";
                     } else {
+                        boton.disabled = false;
                         setMessage('Algo ha salido mal. Ponte en contacto con soporte.');
                     }
                 }
