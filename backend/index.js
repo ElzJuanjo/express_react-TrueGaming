@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from './src/config.js';
 import { routes } from "./src/modules/routes.js";
 import { encrypt } from "./src/modules/encrypt.js";
+import { token } from "./src/modules/email/token.js";
 
 const app = express();
 
@@ -23,3 +24,4 @@ app.use('/read', routes.read);
 app.use('/create', routes.create);
 app.use('/encrypt', encrypt.encrypted);
 app.use('/verify', encrypt.verify);
+app.use('/token', token.sendToken);

@@ -89,7 +89,7 @@ main {
   box-shadow: 0 0 5px black;
 }
 
-#informacion div{
+#informacion div {
   align-items: center;
 }
 
@@ -169,13 +169,15 @@ textarea {
   align-items: center;
 }
 
-#publicacionHeader h1{
+#publicacionHeader h1 {
   font-size: x-large;
 }
-#publicacionHeader h3{
+
+#publicacionHeader h3 {
   font-size: medium;
 }
-#publicacionHeader p{
+
+#publicacionHeader p {
   color: lightgrey;
 }
 
@@ -205,11 +207,23 @@ textarea {
   max-width: 50vw;
 }
 
-#cuenta section button{
+#cuenta section button {
   width: 20vw;
   height: 5vh;
 }
 
 #cuenta img {
   max-width: 20vw;
+}
+
+#recuperar {
+  text-decoration: underline;
+}
+
+#recuperar:hover {
+  cursor: pointer;
+}
+
+#msgForm {
+  word-wrap: break-word;
 }

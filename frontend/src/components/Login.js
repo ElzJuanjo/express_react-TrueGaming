@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { HeaderIndex } from './HeaderIndex'
 import { Footer } from './Footer'
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirigir
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate(); // Inicializa useNavigate
+    const [enableToken, setEnableToken] = useState(false);
+    const [tokenSended, setTokenSended] = useState(null);
+    const [token, setToken] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,6 +35,50 @@ export const Login = () => {
             setMessage(`Las credenciales son incorrectas.`);
         }
     };
+
+    const sendToken = async () => {
+        if (correo) {
+            const id = encodeURIComponent(correo);
+            const verifyEmail = await fetch(`http://localhost:4000/read/usuario/correo/${id}`)
+                .then(data => data.json()).catch(err => null);
+
+            if (verifyEmail) {
+                const button = document.getElementById('recuperar');
+                button.style.display = "none";
+                setMessage('Por favor, espera un momento...');
+
+                const title = 'Recuperación de Cuenta';
+                const response = await fetch(`http://localhost:4000/token/${id}/${title}`, {
+                    method: 'POST'
+                }).then(async answer => {
+                    const info = await answer.json();
+                    return info.message;
+                }).catch(err => null);
+
+                if (response) {
+                    setTokenSended(response);
+                    setEnableToken(true);
+                    setMessage('Revisa tu correo. Hemos enviado una verificación para que recuperes tu cuenta.');
+                } else {
+                    button.style.display = "block";
+                    setMessage('Algo ha salido mal. Ponte en contacto con soporte.');
+                }
+            } else {
+                setMessage('Este correo no se encuentra registrado.');
+            }
+        } else {
+            setMessage('Ingresa tu correo en el campo y vuelve a dar click.')
+        }
+    }
+
+    const verifyToken = (e) => {
+        e.preventDefault();
+        if (token === tokenSended) {
+            navigate('/recoverPass');
+        } else {
+            setMessage('El token ingresado no coincide con el enviado.')
+        }
+    }
 
     return (
         <div>
@@ -65,8 +112,18 @@ export const Login = () => {
                         </div>
                         <button type="submit">Iniciar Sesión</button>
                     </form>
-                    {message && <p>{message}</p>}
-                    <a href='/recoverPassword'>Olvidé mi contraseña</a>
+                    {message && <p id="msgForm">{message}</p>}
+                    <p id="recuperar" onClick={sendToken}>Olvidé mi contraseña</p>
+                    {enableToken && (
+                        <form onSubmit={verifyToken}>
+                            <input
+                                type="text"
+                                onChange={e => setToken(e.target.value)}
+                                placeholder="Ingresa el Token"
+                                required />
+                            <button type="submit">Validar</button>
+                        </form>
+                    )}
                 </section>
             </main>
 

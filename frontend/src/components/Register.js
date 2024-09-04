@@ -10,6 +10,9 @@ export const Register = () => {
     const [contrasena1, setContrasena1] = useState('');
     const [contrasena2, setContrasena2] = useState('');
     const [message, setMessage] = useState('');
+    const [enableToken, setEnableToken] = useState(false);
+    const [token, setToken] = useState('');
+    const [tokenSended, setTokenSended] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -29,20 +32,47 @@ export const Register = () => {
                 if (verifyUser) {
                     setMessage('Este nombre de usuario ya se encuentra en uso.')
                 } else {
-                    const encrypted = await fetch(`http://localhost:4000/encrypt/${contrasena1}`)
-                        .then(data => data.json()).catch(err => null);
-                    const pass = encrypted.message;
-                    let info = `${correo},${nickname},${pass}`;
-                    info = encodeURIComponent(info);
-                    await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena/${info}`, {
+                    id = encodeURIComponent(correo);
+                    const title = 'Verificación de Registro';
+                    const response = await fetch(`http://localhost:4000/token/${id}/${title}`, {
                         method: 'POST'
-                    });
-                    navigate('/login');
+                    }).then(async answer => {
+                        const info = await answer.json();
+                        return info.message;
+                    }).catch(err => null);
+
+                    if (response) {
+                        setTokenSended(response);
+                        setMessage('Revisa tu correo. Hemos enviado una verificación para que completes tu registro.');
+                        setEnableToken(true);
+                        const boton = document.getElementById('registerButton');
+                        boton.disabled = true;
+                        boton.style = "background: #505050";
+                    } else {
+                        setMessage('Algo ha salido mal. Ponte en contacto con soporte.');
+                    }
                 }
             }
 
         } else {
             setMessage('Las contraseñas no coinciden.')
+        }
+    }
+
+    const confirmRegister = async (e) => {
+        e.preventDefault();
+        if (token === tokenSended) {
+            const encrypted = await fetch(`http://localhost:4000/encrypt/${contrasena1}`)
+                .then(data => data.json()).catch(err => null);
+            const pass = encrypted.message;
+            let info = `${correo},${nickname},${pass}`;
+            info = encodeURIComponent(info);
+            await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena/${info}`, {
+                method: 'POST'
+            });
+            navigate('/login');
+        } else {
+            setMessage('El token ingresado no coincide con el enviado.')
         }
     }
 
@@ -61,6 +91,8 @@ export const Register = () => {
                                 name="nickname"
                                 placeholder="Nickname"
                                 value={nickname}
+                                minLength="5"
+                                maxLength="20"
                                 onChange={(e) => setNickname(e.target.value)}
                                 required />
                         </div>
@@ -81,6 +113,8 @@ export const Register = () => {
                                 type="password"
                                 name="contrasena1"
                                 placeholder="Contraseña"
+                                minLength="8"
+                                maxLength="32"
                                 value={contrasena1}
                                 onChange={e => setContrasena1(e.target.value)}
                                 required />
@@ -95,9 +129,19 @@ export const Register = () => {
                                 onChange={e => setContrasena2(e.target.value)}
                                 required />
                         </div>
-                        <button type="submit">Registrarse</button>
+                        <button id="registerButton" type="submit">Registrarse</button>
                     </form>
-                    {message && <p>{message}</p>}
+                    {message && <p id="msgForm">{message}</p>}
+                    {enableToken && (
+                        <form onSubmit={confirmRegister}>
+                            <input
+                                type="text"
+                                onChange={e => setToken(e.target.value)}
+                                placeholder="Ingresa el Token"
+                                required />
+                            <button type="submit">Validar</button>
+                        </form>
+                    )}
                 </section>
             </main>
 

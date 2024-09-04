@@ -8,6 +8,8 @@
 * dotenv
 * cors
 * bcrypt
+* nodemailer
+* crypto
 
 ###### Frontend:
 
