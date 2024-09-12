@@ -34,7 +34,9 @@ export const Login = () => {
                     return info.message;
                 }).catch(err => false);
             if (verify) {
-                navigate('/wall', { state: { username: response.nickname } });
+                const stateData = { user:response , loggedIn: true }                //Guardado en la sesión
+                localStorage.setItem("LoggedUser", JSON.stringify(stateData))       //Guardado en la sesión
+                navigate('/wall');
             } else {
                 setMessage(`Las credenciales son incorrectas.`);
             }
