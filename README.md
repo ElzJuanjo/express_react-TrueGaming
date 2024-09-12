@@ -11,7 +11,7 @@
 
 ## COMANDOS
 
-###### Instalar dependencias: ``npm install``
+###### Instalar dependencias: ``npm install --no-audit``
 
 ###### Iniciar servidor: ``nodejs index.js | npm run start``
 
