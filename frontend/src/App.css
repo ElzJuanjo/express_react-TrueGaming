@@ -3,7 +3,7 @@
   --fondo: #2b2031;
   --articulo: #32203b;
   --extra: #f0e3f7;
-  --active: #FF55FA;
+  --active: #ff88fb;
 }
 
 body {
@@ -146,6 +146,12 @@ input {
   margin: 5px;
   border-style: none;
   box-shadow: 0 0 5px black;
+  background-color: var(--extra);
+}
+
+input:hover {
+  background-color: var(--active);
+  transition: 1s;
 }
 
 select {
@@ -155,15 +161,23 @@ select {
   margin: 5px;
   border-style: none;
   box-shadow: 0 0 5px black;
+  background-color: var(--extra);
+}
+select:hover {
+  background-color: var(--active);
+  transition: 1s;
 }
 
 textarea {
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 0 5px black;
-  width: 35vw;
+  width: 38vw;
+  height: 30vh;
   padding: 5px;
   resize: none;
   margin-bottom: 20px;
+  padding: 1vw;
+  background-color: var(--extra);
 }
 
 /* #publicacion {
@@ -315,6 +329,8 @@ textarea {
   padding: 2%;
   box-shadow: 0 0 5px black;
   margin-top: 1%;
+  border-radius: 20px;
+  margin-bottom: 1vw;
 }
 
 #campo {
@@ -385,4 +401,24 @@ textarea {
 
 #detallesPublicacion div {
   display: flex;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 20px 10px;
+  color: black;
+  background-color: var(--extra);
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-shadow: none;
+  font-weight: bolder;
+}
+.custom-file-upload:hover {
+  background-color: var(--active);
+  transition: 1s;
+}
+
+input[type="file"] {
+  display: none;
 }

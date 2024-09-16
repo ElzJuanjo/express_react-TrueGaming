@@ -9,6 +9,7 @@
 * Registro, Login y Recuperar Cuenta
 * Página Index
 * Publicacion de Reseñas (Subiendo imagenes :O)
+* Se cambió el comando de inicio del servidor backend (ahora se actualiza sin reiniciar el servidor)
 
 ## COMANDOS
 

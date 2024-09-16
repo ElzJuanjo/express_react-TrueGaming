@@ -4,6 +4,8 @@ import { Footer } from './Footer';
 import { useState } from 'react';
 import { HeaderIndex } from './HeaderIndex';
 import { HeaderLogged } from './HeaderLogged';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 
 export const Upload = () => {
     const location = useLocation();
@@ -71,7 +73,7 @@ export const Upload = () => {
                     <form onSubmit={handleSubmit} method="post" encType='multipart/form-data'>
                         <div id="campo">
                             <h3>Título:</h3>
-                            <input value={title} onChange={(e) => setTitle(e.target.value)} required></input>
+                            <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Título de la reseña' required></input>
                         </div>
                         <div id="campo">
                             <h3>Juego:</h3>
@@ -85,14 +87,17 @@ export const Upload = () => {
                             </select>
                         </div>
                         <div id="campo">
-                            <h3>Puntuación:</h3>
-                            <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} required></input>
+                            <h3>Calificación:</h3>
+                            <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} placeholder='Calificación de 1 a 10' required></input>
                         </div>
                         <h3>Reseña:</h3>
                         <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Escribe aquí lo que quieras publicar" required></textarea>
                         <div id="campo">
                             <h3>Imagen:</h3>
-                            <input type="file" name="imgReview" id="imgReview" multiple={false} />
+                            <label for="imgReview" class="custom-file-upload">
+                                <FontAwesomeIcon icon={faUpload} size="xl" />  Selecciona una foto
+                            </label>
+                            <input type="file" name="imgReview" id="imgReview" accept="image/*" multiple={false} />
                         </div>
                         <button type='submit'>PUBLICAR</button>
                     </form>
