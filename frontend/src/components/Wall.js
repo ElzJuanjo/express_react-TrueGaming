@@ -2,6 +2,10 @@ import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Footer } from './Footer';
 import { useState } from 'react';
+import { HeaderIndex } from './HeaderIndex';
+import { HeaderLogged } from './HeaderLogged';
+import { NavBar } from './NavBar';
+import { Reviews } from './Reviews';
 
 export const Wall = () => {
   const location = useLocation();
@@ -14,19 +18,18 @@ export const Wall = () => {
     if (user) {
       setStateUser(JSON.parse(user));
     } 
-  })
+  }, [])
   
   return (
     <div>
+      { stateUser && stateUser.loggedIn ? (<HeaderLogged></HeaderLogged>) : (<HeaderIndex></HeaderIndex>) }
       <main>
-      {stateUser ? (
-        <div>
-          <h1>BIENVENIDOOOOOO {stateUser.user.nickname}</h1>
-          <h2>Tu correo es: {stateUser.user.correo}</h2>
-        </div>
+      {stateUser && stateUser.user && stateUser.user.nickname ? (
+        <NavBar name = {stateUser.user.nickname} />
         ) : (
-          navigate('/')
+          <h1></h1>
         )}
+        <Reviews></Reviews>
       </main>
       <Footer></Footer>
     </div>

@@ -78,9 +78,11 @@ export const Register = () => {
             const encrypted = await fetch(`http://localhost:4000/encrypt/${contrasena1}`)
                 .then(data => data.json()).catch(err => null);
             const pass = encrypted.message;
-            let info = `${key},${user},${pass}`;
+            const avatar = "https://www.4x4.ec/overlandecuador/wp-content/uploads/2017/06/default-user-icon-8.jpg";
+            const bio = "Hi. I am new to TrueGaming!"; // ESTOS DOS NO SE ESTÁN USANDO PORQUE NO DEJA HACER LA QUERY
+            let info = `${key},${user},${pass},${avatar},${bio}`;
             info = encodeURIComponent(info);
-            await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena/${info}`, {
+            await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena,avatar,bio/${info}`, {
                 method: 'POST'
             });
             navigate('/login');

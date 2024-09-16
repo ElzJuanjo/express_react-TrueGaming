@@ -4,6 +4,7 @@ import { success, reject } from "../response.js";
 
 const all = express.Router();
 
+
 all.get('/:table', (req, res) => {
     const table = req.params.table;
     controller.all(table)
@@ -37,6 +38,21 @@ create.post('/:table/:columns/:data', (req, res) => {
     const columns = req.params.columns;
     const data = decodeURIComponent(req.params.data);
     controller.create(table, columns, data)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
+create.use(express.json())
+create.post('/:table/:columns', (req, res) => {
+    const table = req.params.table;
+    const columns = req.params.columns;
+    const data = req.body;
+    console.log(req.body)
+    controller.createReview(table, columns, data)
         .then(answer => {
             success(req, res, answer, 200);
         })

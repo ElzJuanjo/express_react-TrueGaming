@@ -5,6 +5,8 @@ import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { Wall } from './components/Wall';
 import { RecoverPass } from './components/RecoverPass';
+import { Logout } from './components/Logout';
+import { Upload } from './components/Upload';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/wall" element={<Wall />} />
           <Route path="/recoverPass" element={<RecoverPass />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/upload" element={<Upload />} />
         </Routes>
       </Router>
     </div>

@@ -3,6 +3,7 @@
   --fondo: #2b2031;
   --articulo: #32203b;
   --extra: #f0e3f7;
+  --active: #FF55FA;
 }
 
 body {
@@ -35,6 +36,13 @@ header img {
 a {
   text-decoration: none;
   color: var(--extra);
+  font-weight: bolder;
+}
+
+a:hover {
+  color: var(--active);
+  transition: 1s;
+  cursor: pointer;
 }
 
 button {
@@ -47,6 +55,12 @@ button {
   box-shadow: 0 0 5px black;
   border-style: none;
   margin: 5px;
+}
+
+button:hover {
+  background-color: var(--active);
+  transition: 1s;
+  cursor: pointer;
 }
 
 main {
@@ -71,7 +85,8 @@ main {
   max-width: 70vw;
   transition: opacity 1s ease;
   box-shadow: 0 0 5px black;
-  opacity: 0; /* Dejar pa que funcione el carrusel */
+  opacity: 0;
+  /* Dejar pa que funcione el carrusel */
 }
 
 #slider2 {
@@ -145,13 +160,13 @@ select {
 textarea {
   border-radius: 10px;
   box-shadow: 0 0 5px black;
-  width: 40vw;
+  width: 35vw;
   padding: 5px;
   resize: none;
   margin-bottom: 20px;
 }
 
-#publicacion {
+/* #publicacion {
   background-color: var(--articulo);
   margin: 20px;
   padding: 20px;
@@ -180,7 +195,7 @@ textarea {
 
 #publicacionHeader p {
   color: lightgrey;
-}
+} */
 
 #wallHeader {
   background-color: var(--articulo);
@@ -227,4 +242,147 @@ textarea {
 
 #msgForm {
   word-wrap: break-word;
+}
+
+#loggedUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loggedUser img {
+  max-width: 8vh;
+  border-radius: 1vh;
+  margin: 2vh;
+}
+
+#loggedUser h1 {
+  margin-right: 1vw;
+}
+
+
+
+#panel {
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  box-shadow: 0 0 5px black;
+  background-color: var(--articulo);
+  padding: 1.5vw;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 1vh;
+  margin-bottom: 5vh;
+}
+
+#filtrador {
+  background-color: var(--extra);
+  color: black;
+  height: 1.5vw;
+}
+
+#panelFiltro {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#panelFiltro form {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+#panelFiltro form button {
+  height: 2vw;
+  width: 5vw;
+  border-radius: 1vw;
+  padding: 0;
+}
+
+#panelFiltro form select {
+  margin: 0 1vw;
+}
+
+#formulario {
+  text-align: center;
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  background-color: var(--articulo);
+  padding: 2%;
+  box-shadow: 0 0 5px black;
+  margin-top: 1%;
+}
+
+#campo {
+  display: flex;
+  justify-content: space-between;
+  padding: 1% 0;
+}
+
+#headerPublicacion {
+  display: flex;
+  justify-content: space-between;
+}
+
+#headerPublicacion div {
+  display: flex;
+}
+
+#autorPublicacion {
+  display: flex;
+}
+
+#autorPublicacion div {
+  display: inline;
+  height: 0.5vh;
+  align-items: center;
+  line-height: 0.5;
+}
+
+#publicacion img {
+  box-shadow: 0 0 5px black;
+  width: 50vw;
+  margin: 1vh auto;
+}
+
+#autorPublicacion img {
+  width: 5vw; /* Cambia a px o ajusta según sea necesario */
+  border-radius: 50px;
+  margin-right: 1vw;
+}
+
+#publicacion {
+  width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  box-shadow: 0 0 5px black;
+  background-color: var(--articulo);
+  padding: 1.5vw;
+  border-radius: 10px;
+  margin-bottom: 5vh;
+}
+
+#publicacion p {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+#publicacion button {
+  margin: 0
+}
+
+#detallesPublicacion {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2vh;
+  align-items: center;
+}
+
+#detallesPublicacion div {
+  display: flex;
 }
