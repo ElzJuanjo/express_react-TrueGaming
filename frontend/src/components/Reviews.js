@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export const Reviews = () => {
     const navigate = useNavigate();
@@ -22,34 +24,37 @@ export const Reviews = () => {
     }
 
     return (
-        <div id='publicacion'>
+        <div>
             {reviews.map((review) =>
-                <div>
-                    <div id='headerPublicacion'>
-                        <a href=''>
+                <div id='publicacion' key={review.id_resena}>
+                    <div>
+                        <div id='headerPublicacion'>
+                            <a href=''>
+                                <div id='autorPublicacion'>
+                                    <img src={process.env.PUBLIC_URL + "/img/default_user.jpg"} />
+                                    <div>
+                                        <h2>{review.correo_autor}</h2>
+                                        <h5>{review.correo_autor}</h5>
+                                    </div>
+                                </div>
+                            </a>
                             <div id='autorPublicacion'>
-                                <img src={process.env.PUBLIC_URL + "/img/default_user.jpg"} />
                                 <div>
-                                    <h2>{review.correo_autor}</h2>
-                                    <h5>{review.correo_autor}</h5>
+                                    <h2>{review.puntuacion}/10</h2>
+                                    <h4>{review.fecha_resena.slice(0, 10)}</h4>
                                 </div>
                             </div>
-                        </a>
-                        <div id='autorPublicacion'>
-                            <div>
-                                <h2>{review.puntuacion}/10</h2>
-                                <h4>{review.fecha_resena.slice(0, 10)}</h4>
-                            </div>
-                        </div>
 
+                        </div>
+                        <h1 id='title'>{review.titulo_resena}</h1>
+                        <img src={process.env.PUBLIC_URL + review.imagen_resena} />
+                        <p>{review.resena}</p>
+                        <div id='detallesPublicacion'>
+                            <FontAwesomeIcon icon={faHeart} size='3x'/>
+                            <FontAwesomeIcon icon={faComment} size='3x' />
+                        </div>
                     </div>
-                    <h1 id='title'>{review.titulo_resena}</h1>
-                    <img src={process.env.PUBLIC_URL + review.imagen_resena} />
-                    <p>{review.resena}</p>
-                    <div id='detallesPublicacion'>
-                        <i id='botonLike' class='fa-regular fa-heart fa-2xl' title='$id_publicacion'>LIKES</i>
-                        <a href='detallesPublicacion.php?id=" . $id_publicacion . "'><h3><i id='fa-solid fa-comments fa-2xl'>COMENTARIOS</i></h3></a>
-                    </div>
+
                 </div>
             )}
         </div>

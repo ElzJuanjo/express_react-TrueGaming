@@ -94,7 +94,7 @@ export const Upload = () => {
                         <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Escribe aquí lo que quieras publicar" required></textarea>
                         <div id="campo">
                             <h3>Imagen:</h3>
-                            <label for="imgReview" class="custom-file-upload">
+                            <label htmlFor="imgReview" className="custom-file-upload">
                                 <FontAwesomeIcon icon={faUpload} size="xl" />  Selecciona una foto
                             </label>
                             <input type="file" name="imgReview" id="imgReview" accept="image/*" multiple={false} />

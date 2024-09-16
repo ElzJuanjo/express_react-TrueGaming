@@ -21,6 +21,5 @@
 
 
 ## Cosas Pendientes:
-*Hacer una query personalizada para las reviews que traiga el nombre del juego, la información del autor, etc.
-*Con lo anterior hacer que funcionen los likes y más adelante los comentarios
-*Pulir CSS
+* Hacer una query personalizada para las reviews que traiga el nombre del juego, la información del autor, etc.
+* Con lo anterior hacer que funcionen los likes y más adelante los comentarios

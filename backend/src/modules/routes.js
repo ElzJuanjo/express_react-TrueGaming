@@ -47,12 +47,13 @@ create.post('/:table/:columns/:data', (req, res) => {
 });
 
 create.use(express.json())
-create.post('/:table/:columns', (req, res) => {
+
+create.post('/:table/:columns', (req, res) => { //ESTE HACE LO MISMO QUE EL DE ARRIBA, PERO CON UN BODY EN LUGAR DE ENVIAR LOS PARAMETROS POR URL
     const table = req.params.table;
     const columns = req.params.columns;
     const data = req.body;
     console.log(req.body)
-    controller.createReview(table, columns, data)
+    controller.createWithBody(table, columns, data)
         .then(answer => {
             success(req, res, answer, 200);
         })

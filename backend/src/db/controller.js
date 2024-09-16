@@ -9,10 +9,7 @@ const create = (table, columns, data) => {
     return crud.create(table, columns, newData);
 };
 
-const createReview = (table, columns, data) => { //YO SE QUE ESTO ES UN SACRILEGIO PERO UNA REVIEW NO CABE EN UNA URL, ADEMÁS DE QUE LAS COMAS SE LO TIRAN
-    if (!data || typeof data !== 'object') {
-        throw new Error('Invalid data: data is undefined or not an object');
-    }
+const createWithBody = (table, columns, data) => { //YO SE QUE ESTO ES UN SACRILEGIO PERO UNA REVIEW NO CABE EN UNA URL, ADEMÁS DE QUE LAS COMAS SE LO TIRAN
     const values = Object.values(data);
     const newData = values.map(value => `'${value}'`).join(', ');;
     return crud.create(table, columns, newData);
@@ -33,7 +30,7 @@ const del = (table, column, id) => {
 export const controller = {
     all,
     create,
-    createReview,
+    createWithBody,
     read,
     update,
     del
