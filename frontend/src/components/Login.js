@@ -34,8 +34,11 @@ export const Login = () => {
                     return info.message;
                 }).catch(err => false);
             if (verify) {
-                const stateData = { user:response , loggedIn: true }                //Guardado en la sesión
+                const stateData = { user: response, loggedIn: true }                //Guardado en la sesión
                 localStorage.setItem("LoggedUser", JSON.stringify(stateData))       //Guardado en la sesión
+
+                const filterData = { title: 'reciente', order: 'r.fecha_resena' };
+                localStorage.setItem('Filter', JSON.stringify(filterData));
                 navigate('/wall');
             } else {
                 setMessage(`Las credenciales son incorrectas.`);

@@ -1,8 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-export const NavBar = ({name}) => {
+export const NavBar = ({ name }) => {
 
-    const [filtro, setFiltro] = useState("");
+    const [filtro, setFiltro] = useState('');
+    useEffect(() => {
+        const filter = localStorage.getItem('Filter');
+        setFiltro(JSON.parse(filter).title);
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const opcion = document.getElementById('filtrador').value;
+        let filterData;
+        if (opcion === 'reciente') {
+            filterData = { title: opcion, order: 'r.fecha_resena' };
+        } else if (opcion === 'likes') {
+            filterData = { title: opcion, order: 'total_likes' };
+        } else if (opcion === 'comentarios') {
+            filterData = { title: opcion, order: 'total_comentarios' };
+        }
+        localStorage.setItem('Filter', JSON.stringify(filterData));
+        e.target.submit();
+    }
 
     return (
         <div id='panel'>
@@ -12,12 +31,12 @@ export const NavBar = ({name}) => {
             <a href="/searchUsers"><button>Buscar Usuario</button></a>
             <a href="/upload"><button>Publicar Algo</button></a>
             <div id="panelFiltro">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h3>Ordenar por:</h3>
-                    <select name="filtro" id="filtrador" 
+                    <select name="filtro" id="filtrador"
                         value={filtro}
                         onChange={(e) => setFiltro(e.target.value)}>
-                        <option value="reciente" defaultValue="reciente"> Más Recientes </option>
+                        <option value="reciente"> Más Recientes </option>
                         <option value="likes">Con Más Likes</option>
                         <option value="comentarios">Con Más Comentarios</option>
                     </select>

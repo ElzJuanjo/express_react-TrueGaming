@@ -9,7 +9,7 @@ const create = (table, columns, data) => {
     return crud.create(table, columns, newData);
 };
 
-const createWithBody = (table, columns, data) => { //YO SE QUE ESTO ES UN SACRILEGIO PERO UNA REVIEW NO CABE EN UNA URL, ADEMÁS DE QUE LAS COMAS SE LO TIRAN
+const createWithBody = (table, columns, data) => {
     const values = Object.values(data);
     const newData = values.map(value => `'${value}'`).join(', ');;
     return crud.create(table, columns, newData);
@@ -27,11 +27,16 @@ const del = (table, column, id) => {
     return crud.del(table, column, id);
 };
 
+const reviews = (order) => {
+    return crud.reviews(order);
+}
+
 export const controller = {
     all,
     create,
     createWithBody,
     read,
     update,
-    del
+    del,
+    reviews
 }

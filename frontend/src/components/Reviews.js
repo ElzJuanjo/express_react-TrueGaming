@@ -8,19 +8,30 @@ export const Reviews = () => {
 
     // RECUPERACIÓN DE LA SESIÓN
     const [stateUser, setStateUser] = useState(null);
+    const [filter, setFilter] = useState('r.fecha_resena');
     useEffect(() => {
         const user = localStorage.getItem("LoggedUser");
         if (user) {
             setStateUser(JSON.parse(user));
         }
-        loadReviews()
     }, [])
 
-    const [reviews, setReviews] = useState([])
+    useEffect(() => {
+        if (stateUser && stateUser.loggedIn) {
+            const filter = localStorage.getItem('Filter');
+            setFilter(JSON.parse(filter).order);
+        }
+    }, [stateUser]);
+
+    useEffect(() => {
+        loadReviews();
+    }, [filter]);
+
+    const [reviews, setReviews] = useState([]);
     const loadReviews = async (e) => {
-        const reviews = await fetch(`http://localhost:4000/all/resena`) // HAY QUE HACER UNA QUERY PERSONALIZADA QUE TRAIGA EL NOMBRE DEL JUEGO, EL NICKNAME DEL AUTOR, LOS LIKES DE LA RESEÑA, etc
+        const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}`)
             .then(data => data.json()).catch(err => null);
-        setReviews(reviews)
+        setReviews(applyFilter)
     }
 
     return (
@@ -31,10 +42,10 @@ export const Reviews = () => {
                         <div id='headerPublicacion'>
                             <a href=''>
                                 <div id='autorPublicacion'>
-                                    <img src={process.env.PUBLIC_URL + "/img/default_user.jpg"} />
+                                    <img src={review.avatar} />
                                     <div>
-                                        <h2>{review.correo_autor}</h2>
-                                        <h5>{review.correo_autor}</h5>
+                                        <h2>{review.nickname}</h2>
+                                        <h5>{review.titulo_juego}</h5>
                                     </div>
                                 </div>
                             </a>
@@ -50,8 +61,14 @@ export const Reviews = () => {
                         <img src={process.env.PUBLIC_URL + review.imagen_resena} />
                         <p>{review.resena}</p>
                         <div id='detallesPublicacion'>
-                            <FontAwesomeIcon icon={faHeart} size='3x'/>
-                            <FontAwesomeIcon icon={faComment} size='3x' />
+                            <div>
+                                <FontAwesomeIcon icon={faHeart} size='3x' />
+                                <p>{review.total_likes}</p>
+                            </div>
+                            <div>
+                                <FontAwesomeIcon icon={faComment} size='3x' />
+                                <p>{review.total_comentarios}</p>
+                            </div>
                         </div>
                     </div>
 

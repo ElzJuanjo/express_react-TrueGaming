@@ -5,15 +5,28 @@ import { success, reject } from "../response.js";
 const all = express.Router();
 
 
-all.get('/:table', (req, res) => {
+all.get('/:table/:order?', (req, res) => {
     const table = req.params.table;
-    controller.all(table)
-        .then(answer => {
-            success(req, res, answer.rows, 200);
-        })
-        .catch(error => {
-            reject(req, res, error, 500);
-        });
+
+    if (table == 'reviews') {
+        const order = req.params.order;
+
+        controller.reviews(order)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else {
+        controller.all(table)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    }
 });
 
 const read = express.Router();
@@ -46,13 +59,12 @@ create.post('/:table/:columns/:data', (req, res) => {
         });
 });
 
-create.use(express.json())
+create.use(express.json());
 
-create.post('/:table/:columns', (req, res) => { //ESTE HACE LO MISMO QUE EL DE ARRIBA, PERO CON UN BODY EN LUGAR DE ENVIAR LOS PARAMETROS POR URL
+create.post('/:table/:columns', (req, res) => {
     const table = req.params.table;
     const columns = req.params.columns;
     const data = req.body;
-    console.log(req.body)
     controller.createWithBody(table, columns, data)
         .then(answer => {
             success(req, res, answer, 200);
