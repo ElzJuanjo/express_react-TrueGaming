@@ -36,7 +36,7 @@ export const Reviews = () => {
 
     return (
         <div>
-            {reviews.map((review) =>
+            {Array.isArray(reviews) && reviews.map((review) =>
                 <div id='publicacion' key={review.id_resena}>
                     <div>
                         <div id='headerPublicacion'>
@@ -71,10 +71,8 @@ export const Reviews = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             )}
         </div>
-
     )
 }

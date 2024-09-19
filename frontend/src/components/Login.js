@@ -34,6 +34,7 @@ export const Login = () => {
                     return info.message;
                 }).catch(err => false);
             if (verify) {
+                response.contrasena = ""
                 const stateData = { user: response, loggedIn: true }                //Guardado en la sesión
                 localStorage.setItem("LoggedUser", JSON.stringify(stateData))       //Guardado en la sesión
 

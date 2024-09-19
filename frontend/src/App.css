@@ -211,6 +211,10 @@ textarea {
   color: lightgrey;
 } */
 
+h3 {
+  font-size: 1.5rem;
+}
+
 #wallHeader {
   background-color: var(--articulo);
   margin: 20px;
@@ -284,7 +288,7 @@ textarea {
   box-shadow: 0 0 5px black;
   background-color: var(--articulo);
   padding: 1.5vw;
-  border-radius: 5px;
+  border-radius: 5vw;
   text-align: center;
   padding-top: 1vh;
   margin-bottom: 5vh;
