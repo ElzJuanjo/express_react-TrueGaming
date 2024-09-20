@@ -95,12 +95,12 @@ export const Login = () => {
     }
 
     return (
-        <div>
+        <div id='body'>
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section id="register">
-                    <h1 id="title">INICIAR SESIÓN</h1>
+                <section id="formAccount">
+                    <h1>INICIAR SESIÓN</h1>
                     <form onSubmit={handleSubmit}>
                         <div>
                             <h3>Correo: </h3>

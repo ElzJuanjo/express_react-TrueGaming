@@ -31,19 +31,16 @@ export const Index = () => {
     }
 
     return (
-        <div>
-            <HeaderIndex></HeaderIndex> 
+        <div id='body'>
+            <HeaderIndex></HeaderIndex>
             <main>
                 <Slider></Slider>
                 <section id="informacion">
-                    <div>
-                        <h1>¿QUÉ ES TRUE GAMING?</h1>
-                        <p>Somos mucho más que una red social, somos el lugar donde tú, mi querido amigo gamer, podrás encontrar reseñas y pruebas de rendimiento honestas y justas, somos ese lugar que siempre has querido pero que la sociedad y los medios siempre te han quitado, somos tu casa de Minecraft en la noche, somos tu hoguera de Dark Souls, somos tu campamento de Red Dead, somos... tu hogar.</p>
-                        <h2>¿Qué esperas para registrarte?</h2>
-                        <a href="/register"><button>Registrarse</button></a>
-                        <br></br>
-                        <a href="/wall">DAR UN PASEO SIN REGISTRARME</a>
-                    </div>
+                    <h1>¿QUÉ ES TRUE GAMING?</h1>
+                    <p>Somos mucho más que una red social, somos el lugar donde tú, mi querido amigo gamer, podrás encontrar reseñas y pruebas de rendimiento honestas y justas, somos ese lugar que siempre has querido pero que la sociedad y los medios siempre te han quitado, somos tu casa de Minecraft en la noche, somos tu hoguera de Dark Souls, somos tu campamento de Red Dead, somos... tu hogar.</p>
+                    <h2>¿Qué esperas para registrarte?</h2>
+                    <a href="/register"><button>Registrarse</button></a>
+                    <a href="/wall">DAR UN PASEO SIN REGISTRARME</a>
                 </section>
             </main>
             <Footer></Footer>

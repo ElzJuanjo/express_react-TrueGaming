@@ -92,12 +92,12 @@ export const Register = () => {
     }
 
     return (
-        <div>
+        <div id='body'>
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section id="register">
-                    <h1 id="title">REGISTRARSE</h1>
+                <section id="formAccount">
+                    <h1>REGISTRARSE</h1>
                     <form onSubmit={handleSubmit}>
                         <div>
                             <h3>Nickname: </h3>
