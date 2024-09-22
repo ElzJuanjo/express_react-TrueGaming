@@ -7,7 +7,7 @@ export const HeaderIndex = () => {
         <a href="/">
           <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" />
         </a>
-        <section>
+        <section id='buttonHeader'>
           <a href="/login"><button>INICIAR SESIÓN</button></a>
           <a href="/register"><button>REGISTRARSE</button></a>
         </section>

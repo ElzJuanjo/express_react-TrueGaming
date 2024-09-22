@@ -64,8 +64,8 @@ export const RecoverPass = () => {
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section id="register">
-                    <h1 id="title">CAMBIO DE CREDENCIALES</h1>
+                <section>
+                    <h1>CAMBIO DE CREDENCIALES</h1>
                     <h4 style={{ textDecoration: 'underline' }}>{email}</h4>
                     <form onSubmit={handleSubmit}>
                         <div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export const Reviews = () => {
@@ -45,7 +45,7 @@ export const Reviews = () => {
                                     <img src={review.avatar} />
                                     <div>
                                         <h2>{review.nickname}</h2>
-                                        <h5>{review.titulo_juego}</h5>
+                                        <h4>{review.titulo_juego}</h4>
                                     </div>
                                 </div>
                             </a>
@@ -57,7 +57,7 @@ export const Reviews = () => {
                             </div>
 
                         </div>
-                        <h1 id='title'>{review.titulo_resena}</h1>
+                        <h1>{review.titulo_resena}</h1>
                         <img src={process.env.PUBLIC_URL + review.imagen_resena} />
                         <p>{review.resena}</p>
                         <div id='detallesPublicacion'>

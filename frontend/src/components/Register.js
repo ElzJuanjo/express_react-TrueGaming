@@ -96,7 +96,7 @@ export const Register = () => {
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section id="formAccount">
+                <section id="formulario">
                     <h1>REGISTRARSE</h1>
                     <form onSubmit={handleSubmit}>
                         <div>

@@ -17,15 +17,15 @@ export const Wall = () => {
     const user = localStorage.getItem("LoggedUser");
     if (user) {
       setStateUser(JSON.parse(user));
-    } 
+    }
   }, [])
-  
+
   return (
-    <div>
-      { stateUser && stateUser.loggedIn ? (<HeaderLogged></HeaderLogged>) : (<HeaderIndex></HeaderIndex>) }
+    <div id='body'>
+      {stateUser && stateUser.loggedIn ? (<HeaderLogged></HeaderLogged>) : (<HeaderIndex></HeaderIndex>)}
       <main>
-      {stateUser && stateUser.user && stateUser.user.nickname ? (
-        <NavBar name = {stateUser.user.nickname} />
+        {stateUser && stateUser.user && stateUser.user.nickname ? (
+          <NavBar name={stateUser.user.nickname} />
         ) : (
           <h1></h1>
         )}

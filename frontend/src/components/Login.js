@@ -99,7 +99,7 @@ export const Login = () => {
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section id="formAccount">
+                <section id="formulario">
                     <h1>INICIAR SESIÓN</h1>
                     <form onSubmit={handleSubmit}>
                         <div>

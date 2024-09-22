@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 export const HeaderLogged = () => {
 
@@ -15,15 +17,14 @@ export const HeaderLogged = () => {
         <div>
             <header>
                 <a href="/">
-                    <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" />
+                    <img id='logoLogged' src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" />
                 </a>
-                <section>
-                    <div id='loggedUser'>
+                <section id='loggedUser'>
+                    <a id='iconHome' href="/"><FontAwesomeIcon icon={faHome} size='3x' /></a>
+                    <a id='iconAccount' href="/myAccount">
                         <img src={stateUser && stateUser.user && stateUser.user.avatar ? (stateUser.user.avatar) : (process.env.PUBLIC_URL + "/img/default_user.jpg")} alt='AVATAR'></img>
-                        <h1>{stateUser && stateUser.user && stateUser.user.nickname ? (stateUser.user.nickname) : ("Cargando...")}</h1>
-                        <a href="/myAccount"><button>MI CUENTA</button></a>
-                        <a href="/logout"><button>CERRAR SESIÓN</button></a>
-                    </div>
+                    </a>
+                    <a href="/logout"><FontAwesomeIcon icon={faRightFromBracket} size='3x' /></a>
                 </section>
             </header>
         </div>

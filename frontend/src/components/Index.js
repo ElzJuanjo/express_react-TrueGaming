@@ -3,6 +3,7 @@ import { Footer } from './Footer'
 import { HeaderIndex } from './HeaderIndex'
 import { useNavigate } from 'react-router-dom';
 import { Slider } from './Slider';
+import '../Responsive.css';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 export const Index = () => {

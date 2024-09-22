@@ -1,0 +1,102 @@
+/* Tablet */
+@media (max-width:890px) {
+    header img {
+        width: 100%;
+    }
+
+    #headerPublicacion {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #autorPublicacion {
+        justify-content: center;
+    }
+
+    #autorPublicacion img {
+        width: 12.5%;
+    }
+
+    #iconAccount {
+        width: 20%;
+    }
+}
+
+/* Celular Vertical */
+@media (max-width:430px) {
+    header {
+        height: 25vh;
+        max-height: 25%;
+    }
+
+    button {
+        font-size: 0.8rem;
+    }
+
+    main {
+        margin-top: 25vh;
+    }
+
+    #logoLogged {
+        display: none;
+    }
+
+    #loggedUser {
+        justify-content: center;
+    }
+
+    #iconAccount {
+        margin: 0 20px;
+        width: 25%;
+    }
+
+    #iconHome {
+        display: block;
+    }
+
+    #panel img {
+        display: block;
+        width: 100%;
+    }
+
+    #headerPublicacion {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #autorPublicacion {
+        flex-direction: column;
+    }
+
+    #autorPublicacion img {
+        width: 25%;
+    }
+}
+
+/* Celular Horizontal */
+@media (max-height:430px) {
+    header {
+        height: 30vh;
+        max-height: 30%;
+    }
+
+    header img {
+        width: 55%;
+    }
+
+    #buttonHeader {
+        flex-wrap: nowrap;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    main {
+        margin-top: 30vh;
+    }
+
+    #iconAccount {
+        width: 15%;
+    }
+}

@@ -25,12 +25,13 @@ export const NavBar = ({ name }) => {
 
     return (
         <div id='panel'>
+            <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" />
             <div>
                 <h3>Hola {name}, ¿Qué quieres hacer hoy?</h3>
             </div>
             <a href="/searchUsers"><button>Buscar Usuario</button></a>
             <a href="/upload"><button>Publicar Algo</button></a>
-            <div id="panelFiltro">
+            <div>
                 <form onSubmit={handleSubmit}>
                     <h3>Ordenar por:</h3>
                     <select name="filtro" id="filtrador"

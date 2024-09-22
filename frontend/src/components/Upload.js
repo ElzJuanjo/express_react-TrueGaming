@@ -21,8 +21,15 @@ export const Upload = () => {
         loadGames()
     }, [])
 
+    // No permite el acceso si no ha iniciado sesión
+    useEffect(() => {
+        if (stateUser && !stateUser.loggedIn) {
+            navigate('/');
+        }
+    }, [stateUser, navigate]);
+
     const [games, setGames] = useState([])
-    const loadGames = async (e) => {
+    const loadGames = async () => {
         const games = await fetch(`http://localhost:4000/all/juego`)
             .then(data => data.json()).catch(err => null);
         setGames(games)
@@ -65,17 +72,17 @@ export const Upload = () => {
     }
 
     return (
-        <div>
+        <div id='body'>
             {stateUser && stateUser.loggedIn ? (<HeaderLogged></HeaderLogged>) : (<HeaderIndex></HeaderIndex>)}
             <main>
-                <div id="formulario">
+                <section id="formulario">
                     <h1>PUBLICAR</h1>
                     <form onSubmit={handleSubmit} method="post" encType='multipart/form-data'>
-                        <div id="campo">
+                        <div>
                             <h3>Título:</h3>
                             <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Título de la reseña' required></input>
                         </div>
-                        <div id="campo">
+                        <div>
                             <h3>Juego:</h3>
                             <select value={game} onChange={(e) => setGame(e.target.value)} required>
                                 <option value="" defaultValue={null} disabled>Selecciona un juego</option>
@@ -86,22 +93,21 @@ export const Upload = () => {
                                 ))}
                             </select>
                         </div>
-                        <div id="campo">
+                        <div>
                             <h3>Calificación:</h3>
-                            <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} placeholder='Calificación de 1 a 10' required></input>
+                            <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} placeholder='De 1 a 10' required></input>
                         </div>
-                        <h3>Reseña:</h3>
-                        <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Escribe aquí lo que quieras publicar" required></textarea>
-                        <div id="campo">
+                        <div>
+                            <h3>Reseña:</h3>
+                            <textarea value={review} onChange={(e) => setReview(e.target.value)} placeholder="Escribe aquí lo que quieras publicar" required></textarea>
+                        </div>
+                        <div>
                             <h3>Imagen:</h3>
-                            <label htmlFor="imgReview" className="custom-file-upload">
-                                <FontAwesomeIcon icon={faUpload} size="xl" />  Selecciona una foto
-                            </label>
                             <input type="file" name="imgReview" id="imgReview" accept="image/*" multiple={false} />
                         </div>
                         <button type='submit'>PUBLICAR</button>
                     </form>
-                </div>
+                </section>
             </main>
             <Footer></Footer>
         </div>
