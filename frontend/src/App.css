@@ -296,3 +296,7 @@ button:hover {
     display: flex;
     gap: 10px;
 }
+
+#detallesPublicacion div:hover {
+    cursor: pointer;
+}

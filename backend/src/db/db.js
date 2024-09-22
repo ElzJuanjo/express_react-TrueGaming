@@ -123,7 +123,7 @@ const deleteLike = (id_resena, correo_autor) => {
             WHERE
                 id_resena = ${id_resena}
             AND
-                correo_autor = ${correo_autor}
+                correo_autor = '${correo_autor}'
 
             `, (error, results) => {
             if (error) {

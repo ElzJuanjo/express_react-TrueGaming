@@ -100,26 +100,23 @@ del.post('/:table/:column/:id', (req, res) => {
     const column = req.params.column;
     const id = decodeURIComponent(req.params.id);
 
-    controller.del(table, column, id)
-        .then(answer => {
-            success(req, res, answer, 200);
-        })
-        .catch(error => {
-            reject(req, res, error, 500);
-        });
-});
-
-del.post('/:id_resena/:correo_autor', (req, res) => {
-    const id_resena = decodeURIComponent(req.params.id_resena);
-    const correo_autor = decodeURIComponent(req.params.correo_autor);
-
-    controller.deleteLike(id_resena, correo_autor)
-        .then(answer => {
-            success(req, res, answer, 200);
-        })
-        .catch(error => {
-            reject(req, res, error, 500);
-        });
+    if (table === 'removeLike') {
+        controller.deleteLike(column, id)
+            .then(answer => {
+                success(req, res, answer, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else {
+        controller.del(table, column, id)
+            .then(answer => {
+                success(req, res, answer, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    }
 });
 
 export const routes = {

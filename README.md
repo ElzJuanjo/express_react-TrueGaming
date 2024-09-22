@@ -6,6 +6,7 @@
 * Nuevos estilos con responsividad
 * Filtros
 * Navegación con y sin sesión
+* Likes
 
 ## COMANDOS
 
@@ -15,5 +16,5 @@
 
 ## PENDIENTES
 
-* Likes y Comentarios
+* Comentarios
 * Imagenes de publicar con url y sin nada

@@ -5,8 +5,6 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 
-// ARREGLAR LA QUERY QUE NO QUIERE FUNCIONAR
-
 export const Reviews = () => {
     const navigate = useNavigate();
 
@@ -16,48 +14,66 @@ export const Reviews = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        const user = localStorage.getItem("LoggedUser");
-        if (user) {
-            setStateUser(JSON.parse(user));
+        const user = JSON.parse(localStorage.getItem("LoggedUser"));
+        const filter = (localStorage.getItem('Filter')) ? JSON.parse(localStorage.getItem('Filter')).order : 'r.fecha_resena';
+        setFilter(filter);
+        if (user && user.loggedIn) {
+            setStateUser(user);
+        } else {
+            loadReviews();
         }
     }, [])
 
-    // useEffect(() => {
-    //     const filter = (localStorage.getItem('Filter')) ? JSON.parse(localStorage.getItem('Filter')).order : 'r.fecha_resena';
-    //     setFilter(filter);
-    //     if (stateUser && stateUser.loggedIn) {
-    //         loadReviewsLogged();
-    //     }
-    // }, [stateUser]);
+    useEffect(() => {
+        if (stateUser && stateUser.loggedIn) {
+            loadReviewsLogged();
+        }
+    }, [stateUser]);
 
-    // useEffect(() => {
-    //     if (stateUser && !stateUser.loggedIn || !stateUser) {
-    //         loadReviews();
-    //     }
-    // }, [filter]);
+    const loadReviewsLogged = async () => {
+        const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}/${encodeURIComponent(stateUser.user.correo)}`)
+            .then(data => data.json()).catch(err => null);
+        setReviews(applyFilter);
+    }
 
-    // const loadReviewsLogged = async () => {
-    //     const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}/${encodeURIComponent(stateUser.user.correo)}`)
-    //         .then(data => data.json()).catch(err => null);
-    //     setReviews(applyFilter);
-    // }
-
-    // const loadReviews = async () => {
-    //     const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}`)
-    //         .then(data => data.json()).catch(err => null);
-    //     setReviews(applyFilter);
-    // }
+    const loadReviews = async () => {
+        const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}`)
+            .then(data => data.json()).catch(err => null);
+        setReviews(applyFilter);
+    }
 
     const giveLike = async (review) => {
-        if (review.liked === 1) {
-            const id = encodeURIComponent(review.id_resena);
-            const correo = encodeURIComponent(stateUser.user.correo);
-            const response = await fetch(`http://localhost:4000/delete/${id}/${correo}`)
-        } else {
-            const id = review.id_resena
-            const correo = stateUser.user.correo
-            let info = `${id},${correo}`
-            const response = await fetch(`http://localhost:4000/create/likeresenia/id_resena,correo_autor/${info}`)
+        if (stateUser && stateUser.loggedIn) {
+            const id = review.id_resena;
+            const correo = stateUser.user.correo;
+            let updatedReviews = [...reviews];
+
+            if (review.liked === '1') {
+                await fetch(`http://localhost:4000/delete/removeLike/${id}/${encodeURIComponent(correo)}`, {
+                    method: 'POST'
+                });
+
+                updatedReviews = updatedReviews.map(r => {
+                    if (r.id_resena === review.id_resena) {
+                        return { ...r, liked: '0', total_likes: parseInt(r.total_likes) - 1 };
+                    }
+                    return r;
+                });
+            } else {
+                const info = encodeURIComponent(`${id},${correo}`);
+                await fetch(`http://localhost:4000/create/likeresenia/id_resena,correo_autor/${info}`, {
+                    method: 'POST'
+                });
+
+                updatedReviews = updatedReviews.map(r => {
+                    if (r.id_resena === review.id_resena) {
+                        return { ...r, liked: '1', total_likes: parseInt(r.total_likes) + 1 };
+                    }
+                    return r;
+                });
+            }
+
+            setReviews(updatedReviews);
         }
     }
 
@@ -65,7 +81,6 @@ export const Reviews = () => {
         <div>
             {Array.isArray(reviews) && reviews.map((review) =>
                 <div id='publicacion' key={review.id_resena}>
-                    {console.log(review.liked)}
                     <div>
                         <div id='headerPublicacion'>
                             <a href=''>
@@ -90,13 +105,13 @@ export const Reviews = () => {
                         <p>{review.resena}</p>
                         <div id='detallesPublicacion'>
                             <div>
-                                {review.liked === 1 ? (
+                                {review.liked === '1' ? (
                                     <div>
-                                        <FontAwesomeIcon icon={solidHeart} size='3x' style={{ color: "#ff0000", }} onClick={giveLike(review)} /><h3>{review.total_likes}</h3>
+                                        <FontAwesomeIcon icon={solidHeart} size='3x' style={{ color: "#ff0000", }} onClick={() => giveLike(review)} /><h3>{review.total_likes}</h3>
                                     </div>
                                 ) : (
                                     <div>
-                                        <FontAwesomeIcon icon={regularHeart} size='3x' /><h3>{review.total_likes}</h3>
+                                        <FontAwesomeIcon icon={regularHeart} size='3x' onClick={() => giveLike(review)} /><h3>{review.total_likes}</h3>
                                     </div>
                                 )}
 
