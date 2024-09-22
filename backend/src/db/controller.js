@@ -27,8 +27,12 @@ const del = (table, column, id) => {
     return crud.del(table, column, id);
 };
 
-const reviews = (order) => {
-    return crud.reviews(order);
+const deleteLike = (id_resena, correo_autor) => {
+    return crud.deleteLike(id_resena, correo_autor)
+}
+
+const reviews = (order, sessionUserEmail) => {
+    return crud.reviews(order, sessionUserEmail);
 }
 
 export const controller = {
@@ -38,5 +42,6 @@ export const controller = {
     read,
     update,
     del,
+    deleteLike,
     reviews
 }

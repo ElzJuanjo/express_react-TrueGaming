@@ -148,7 +148,7 @@ export const Register = () => {
                     </form>
                     {message && <p id="msgForm">{message}</p>}
                     {enableToken && (
-                        <form onSubmit={confirmRegister}>
+                        <form id='formToken' onSubmit={confirmRegister}>
                             <input
                                 type="text"
                                 onChange={e => setToken(e.target.value)}

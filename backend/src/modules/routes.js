@@ -5,13 +5,14 @@ import { success, reject } from "../response.js";
 const all = express.Router();
 
 
-all.get('/:table/:order?', (req, res) => {
+all.get('/:table/:order?/:correo?', (req, res) => {
     const table = req.params.table;
 
     if (table == 'reviews') {
         const order = req.params.order;
+        const correo = decodeURIComponent(req.params.correo);
 
-        controller.reviews(order)
+        controller.reviews(order, correo)
             .then(answer => {
                 success(req, res, answer.rows, 200);
             })
@@ -100,6 +101,19 @@ del.post('/:table/:column/:id', (req, res) => {
     const id = decodeURIComponent(req.params.id);
 
     controller.del(table, column, id)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
+del.post('/:id_resena/:correo_autor', (req, res) => {
+    const id_resena = decodeURIComponent(req.params.id_resena);
+    const correo_autor = decodeURIComponent(req.params.correo_autor);
+
+    controller.deleteLike(id_resena, correo_autor)
         .then(answer => {
             success(req, res, answer, 200);
         })

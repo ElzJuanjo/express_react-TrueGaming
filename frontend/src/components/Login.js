@@ -129,7 +129,7 @@ export const Login = () => {
                     {message && <p id="msgForm">{message}</p>}
                     <p id="recuperar" onClick={sendToken}>Olvidé mi contraseña</p>
                     {enableToken && (
-                        <form onSubmit={verifyToken}>
+                        <form id='formToken' onSubmit={verifyToken}>
                             <input
                                 type="text"
                                 onChange={e => setToken(e.target.value)}

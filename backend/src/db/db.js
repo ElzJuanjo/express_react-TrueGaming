@@ -64,35 +64,67 @@ const del = (table, column, id) => {
     });
 };
 
-const reviews = (order) => {
+const reviews = (order, sessionUserEmail) => {
+    let query = `
+    SELECT 
+        r.id_resena,
+        r.titulo_resena,
+        j.titulo_juego,
+        r.imagen_resena,
+        r.resena,
+        r.puntuacion,
+        r.fecha_resena,
+        u.nickname,
+        u.correo,
+        u.avatar,
+        COUNT(DISTINCT l.id_like) AS total_likes
+    `;
+    if (sessionUserEmail) {
+        query += `,
+        (SELECT COUNT(DISTINCT l2.id_like)
+        FROM likeresenia l2
+        WHERE l2.correo_autor = '${sessionUserEmail}' 
+        AND l2.id_resena = r.id_resena) AS liked,
+        COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
+        `;
+    }
+    query += `
+        FROM 
+            resena r
+        JOIN 
+            juego j ON r.id_juego_resena = j.id_juego
+        JOIN 
+            usuario u ON r.correo_autor = u.correo
+        LEFT JOIN 
+            likeresenia l ON r.id_resena = l.id_resena
+        LEFT JOIN 
+            comentarioresena c ON r.id_resena = c.id_resena
+        GROUP BY 
+            r.id_resena, r.titulo_resena, j.titulo_juego, r.imagen_resena, 
+            r.resena, r.puntuacion, r.fecha_resena, u.nickname, u.avatar, u.correo
+        ORDER BY 
+            ${order} DESC;
+    `;
+    return new Promise((resolve, reject) => {
+        connection.query(query, (error, results) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(results);
+        });
+    });
+}
+
+const deleteLike = (id_resena, correo_autor) => {
     return new Promise((resolve, reject) => {
         connection.query(`
-            SELECT 
-                r.id_resena,
-                r.titulo_resena,
-                j.titulo_juego,
-                r.imagen_resena,
-                r.resena,
-                r.puntuacion,
-                r.fecha_resena,
-                u.nickname,
-                u.avatar,
-                COUNT(DISTINCT l.id_like) AS total_likes,
-                COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
-            FROM 
-                resena r
-            JOIN 
-                juego j ON r.id_juego_resena = j.id_juego
-            JOIN 
-                usuario u ON r.correo_autor = u.correo
-            LEFT JOIN 
-                likeresenia l ON r.id_resena = l.id_resena
-            LEFT JOIN 
-                comentarioresena c ON r.id_resena = c.id_resena
-            GROUP BY 
-                r.id_resena, r.titulo_resena, j.titulo_juego, r.imagen_resena, 
-                r.resena, r.puntuacion, r.fecha_resena, u.nickname, u.avatar
-            ORDER BY ${order} DESC;
+            DELETE FROM
+                likeresenia
+            WHERE
+                id_resena = ${id_resena}
+            AND
+                correo_autor = ${correo_autor}
+
             `, (error, results) => {
             if (error) {
                 return reject(error);
@@ -108,5 +140,6 @@ export const crud = {
     read,
     update,
     del,
-    reviews
+    reviews,
+    deleteLike
 };
