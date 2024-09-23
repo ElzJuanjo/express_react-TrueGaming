@@ -6,6 +6,7 @@ import { HeaderIndex } from './HeaderIndex';
 import { HeaderLogged } from './HeaderLogged';
 import { NavBar } from './NavBar';
 import { Reviews } from './Reviews';
+import { NavBarNotLogged } from './NavBarNotLogged';
 
 export const Wall = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ export const Wall = () => {
         {stateUser && stateUser.user && stateUser.user.nickname ? (
           <NavBar name={stateUser.user.nickname} />
         ) : (
-          <h1></h1>
+          <NavBarNotLogged />
         )}
         <Reviews></Reviews>
       </main>

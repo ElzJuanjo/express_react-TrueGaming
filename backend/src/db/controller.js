@@ -35,6 +35,14 @@ const reviews = (order, sessionUserEmail) => {
     return crud.reviews(order, sessionUserEmail);
 }
 
+const review = (id_resena, sessionUserEmail) => {
+    return crud.review(id_resena, sessionUserEmail);
+}
+
+const reviewComments = (id_resena, sessionUserEmail) => {
+    return crud.reviewComments(id_resena,sessionUserEmail);
+}
+
 export const controller = {
     all,
     create,
@@ -43,5 +51,7 @@ export const controller = {
     update,
     del,
     deleteLike,
-    reviews
+    reviews,
+    reviewComments,
+    review
 }

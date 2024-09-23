@@ -7,6 +7,7 @@
 * Filtros
 * Navegación con y sin sesión
 * Likes
+* Comentarios (Crear, Leer y Eliminar)
 
 ## COMANDOS
 
@@ -16,5 +17,5 @@
 
 ## PENDIENTES
 
-* Comentarios
-* Imagenes de publicar con url y sin nada
+* Poder ver comentarios sin estar loggeado
+* Imagenes de publicar con url y sin nada (mañana lo hago, tengo sueño)

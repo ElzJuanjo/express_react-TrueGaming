@@ -90,6 +90,24 @@ footer {
     text-align: center;
 }
 
+/* SWEET ALERT */
+.dark-popup {
+    background-color: #333; 
+    color: #fff; 
+}
+
+.dark-title {
+    color: #ff0000; 
+}
+
+.dark-html {
+    color: #ccc; 
+}
+
+.dark-actions {
+    background-color: #444; 
+}
+
 /* INDEX */
 #slider {
     display: grid;
@@ -130,6 +148,11 @@ textarea {
     border-style: none;
     background: var(--extra);
     width: 100%;
+    resize: none;
+}
+textarea:hover {
+    background-color: var(--active);
+    transition: 1s;
 }
 
 select {
@@ -253,10 +276,13 @@ button:hover {
     box-shadow: 0 0 5px #000;
     display: flex;
     flex-direction: column;
+    width: 60%;
+    margin-left: 20%;
+    border-radius: 20px;
 }
 
 #publicacion img {
-    width: 80%;
+    width: 90%;
     border-radius: 25px;
 }
 
@@ -299,4 +325,46 @@ button:hover {
 
 #detallesPublicacion div:hover {
     cursor: pointer;
+}
+
+/* COMENTARIOS */
+
+#comentar {
+    background-color: var(--articulo);
+    width: 40%;
+    padding: 10px;
+    padding-top: 0;
+    box-shadow: 0 0 5px black;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+#comentar form {
+    display: flex;
+}
+
+#comentario {
+    background-color: var(--articulo);
+    width: 600px;
+    padding: 15px;
+    border-radius: 30px;
+    box-shadow: 0 0 5px black;
+    text-align: justify;
+    margin: 20px 0;
+}
+#comentario p {
+    color: lightgrey;
+}
+#comentario img {
+    width: 70px;
+    border-radius: 100%;
+    margin-right: 20px;
+}
+
+#headerComentario {
+    display: flex;
+    justify-content: space-between;
+}
+#headerComentario div {
+    display: flex;
+    align-items: center;
 }

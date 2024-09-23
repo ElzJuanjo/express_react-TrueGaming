@@ -19,7 +19,30 @@ all.get('/:table/:order?/:correo?', (req, res) => {
             .catch(error => {
                 reject(req, res, error, 500);
             });
-    } else {
+    } else if (table == 'review') {
+        const id = req.params.order;
+        const correo = decodeURIComponent(req.params.correo);
+
+        controller.review(id, correo)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else if (table == 'comentarioresena') {
+        const id = req.params.order;
+        const correo = decodeURIComponent(req.params.correo);
+        
+        controller.reviewComments(id, correo)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    }
+    else {
         controller.all(table)
             .then(answer => {
                 success(req, res, answer.rows, 200);

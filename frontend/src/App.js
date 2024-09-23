@@ -7,6 +7,8 @@ import { Wall } from './components/Wall';
 import { RecoverPass } from './components/RecoverPass';
 import { Logout } from './components/Logout';
 import { Upload } from './components/Upload';
+import { Review } from './components/Review';
+import { ReviewComments } from './components/ReviewComments';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/recoverPass" element={<RecoverPass />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/upload" element={<Upload />} />
+          <Route path="/review/:id" element={<ReviewComments />} />
         </Routes>
       </Router>
     </div>
