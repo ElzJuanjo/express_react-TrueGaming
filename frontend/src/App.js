@@ -7,7 +7,6 @@ import { Wall } from './components/Wall';
 import { RecoverPass } from './components/RecoverPass';
 import { Logout } from './components/Logout';
 import { Upload } from './components/Upload';
-import { Review } from './components/Review';
 import { ReviewComments } from './components/ReviewComments';
 
 function App() {

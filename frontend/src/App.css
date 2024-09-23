@@ -4,7 +4,7 @@
     --header: #1f1b21;
     --fondo: #2b2031;
     --articulo: #32203b;
-    --extra: #f0e3f7;
+    --extra: #f2e2fa;
     --active: #ff88fb;
     --medio: #4b3356;
 }
@@ -176,6 +176,11 @@ textarea::-webkit-scrollbar-thumb {
     border-radius: 25px;
 }
 
+input:hover {
+    background: var(--active);
+    transition: 1s;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -187,7 +192,9 @@ select:focus {
     background: var(--articulo);
     padding: 20px;
     box-shadow: 0 0 5px #000;
-    margin: auto;
+    margin: 20px 0;
+    width: 40%;
+    border-radius: 20px;
 }
 
 #formulario div {
@@ -277,7 +284,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     width: 60%;
-    margin-left: 20%;
+    margin-left: 19%;
     border-radius: 20px;
 }
 

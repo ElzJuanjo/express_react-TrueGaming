@@ -51,7 +51,7 @@ export const ReviewComments = () => {
     }
 
     const loadComments = async () => {
-        const Comments = await fetch(`http://localhost:4000/all/comentarioresena/${id_review}}`)
+        const Comments = await fetch(`http://localhost:4000/all/comentarioresena/${id_review}`)
             .then(data => data.json()).catch(err => null);
         setComments(Comments);
     }

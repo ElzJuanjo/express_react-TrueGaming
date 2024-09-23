@@ -2,12 +2,12 @@
 
 #### ALPHA 1.2
 
-* Publicacion de Reseñas
+* Publicacion de Reseñas con y sin imagen (url o upload)
 * Nuevos estilos con responsividad
 * Filtros
 * Navegación con y sin sesión
 * Likes
-* Comentarios (Crear, Leer y Eliminar)
+* Comentarios 
 
 ## COMANDOS
 
@@ -17,5 +17,4 @@
 
 ## PENDIENTES
 
-* Poder ver comentarios sin estar loggeado
-* Imagenes de publicar con url y sin nada (mañana lo hago, tengo sueño)
+* Panel de MI CUENTA (Proximo finde)

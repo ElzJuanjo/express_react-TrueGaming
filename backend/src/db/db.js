@@ -167,7 +167,6 @@ const review = (id_resena, sessionUserEmail) => {
 }
 
 const reviewComments = (id_resena, sessionUserEmail) => {
-    console.log('fuck'+sessionUserEmail)
     let query = `
     SELECT 
         r.id_resena,
@@ -176,10 +175,10 @@ const reviewComments = (id_resena, sessionUserEmail) => {
         c1.fecha_comentario,
         u.correo,
         u.nickname,
-        u.avatar,
+        u.avatar
     `;
     if (sessionUserEmail) {
-        query += `
+        query += `,
         CASE 
             WHEN u.correo = '${sessionUserEmail}' THEN 1
             ELSE 0

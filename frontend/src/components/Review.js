@@ -71,7 +71,11 @@ export const Review = ({ resena }) => {
 
                         </div>
                         <h1>{review.titulo_resena}</h1>
-                        <img src={process.env.PUBLIC_URL + review.imagen_resena} />
+                        {review.imagen_resena!='none' ? (
+                            <img src={review.imagen_resena} />
+                        ) : (
+                            <p></p>
+                        )}
                         <p>{review.resena}</p>
                         <div id='detallesPublicacion'>
                             <div>

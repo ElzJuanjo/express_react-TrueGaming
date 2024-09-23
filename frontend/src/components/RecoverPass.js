@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { HeaderIndex } from './HeaderIndex';
 import { Footer } from './Footer';
+import Swal from 'sweetalert2';
 
 export const RecoverPass = () => {
     const [contrasena1, setContrasena1] = useState('');
@@ -21,6 +22,25 @@ export const RecoverPass = () => {
     if (!email) {
         return null; // No renderiza nada mientras redirige
     }
+
+    const confirmRecover = () => {
+        Swal.fire({
+            title: 'Tu contraseña se ha restablecido con éxito',
+            text: `Ya puedes iniciar sesión con tu nueva contraseña`,
+            icon: 'success',
+            confirmButtonColor: 'green',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+                popup: 'dark-popup', 
+                htmlContainer: 'dark-html', 
+                actions: 'dark-actions', 
+            },
+        }).then((result) => {
+            if (result.isDismissed || result.isConfirmed) {
+                navigate('/login');
+            }
+        });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -46,7 +66,7 @@ export const RecoverPass = () => {
                 }).then(answer => answer).catch(err => null);
 
                 if (update) {
-                    navigate('/login');
+                    confirmRecover()
                 } else {
                     setMessage('Algo ha salido mal. Ponte en contacto con soporte.');
                 }
@@ -60,11 +80,11 @@ export const RecoverPass = () => {
     }
 
     return (
-        <div>
+        <div id='body'>
             <HeaderIndex></HeaderIndex>
 
             <main>
-                <section>
+                <section id='formulario'>
                     <h1>CAMBIO DE CREDENCIALES</h1>
                     <h4 style={{ textDecoration: 'underline' }}>{email}</h4>
                     <form onSubmit={handleSubmit}>
@@ -95,7 +115,7 @@ export const RecoverPass = () => {
                     {message && <p id="msgForm">{message}</p>}
                 </section>
             </main>
-
+            {confirmRecover()}
             <Footer />
         </div>
     );

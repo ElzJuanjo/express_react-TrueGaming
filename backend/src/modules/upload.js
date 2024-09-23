@@ -1,9 +1,7 @@
 import express from 'express';
-import { success } from "../response.js";
 import multer from 'multer';
 import fs from 'node:fs';
 import crypto from 'crypto';
-import path from 'node:path';
 
 const uploader = multer( { dest: '../frontend/public/img/uploads' } );
 

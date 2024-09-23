@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { HeaderIndex } from './HeaderIndex'
 import { Footer } from './Footer'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const Register = () => {
 
@@ -72,6 +73,25 @@ export const Register = () => {
         }
     }
 
+    const confirmRegisterAlert = () => {
+        Swal.fire({
+            title: '¡Te has registrado con exito!',
+            text: `Bienvenido a la familia, ${nickname}`,
+            icon: 'success',
+            confirmButtonColor: 'green',
+            confirmButtonText: '¡Genial!',
+            customClass: {
+                popup: 'dark-popup', 
+                htmlContainer: 'dark-html', 
+                actions: 'dark-actions', 
+            },
+        }).then((result) => {
+            if (result.isDismissed || result.isConfirmed) {
+                navigate('/login');
+            }
+        });
+    };
+
     const confirmRegister = async (e) => {
         e.preventDefault();
         if (token === tokenSended) {
@@ -85,7 +105,7 @@ export const Register = () => {
             await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena,avatar,bio/${info}`, {
                 method: 'POST'
             });
-            navigate('/login');
+            confirmRegisterAlert();
         } else {
             setMessage('El token ingresado no coincide con el enviado.')
         }
@@ -159,7 +179,6 @@ export const Register = () => {
                     )}
                 </section>
             </main>
-
             <Footer></Footer>
         </div>
     )

@@ -38,9 +38,9 @@ export const Comment = ({ comment,loadCommentsLogged,loadReviewLogged }) => {
             }
         });
     };
+    
     return (
         <div id='comentario'>
-            {console.log(comment)}
             <div id='headerComentario'>
                 <div>
                     <img src={comment.avatar}></img>

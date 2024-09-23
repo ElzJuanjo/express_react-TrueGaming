@@ -9,8 +9,6 @@ import { Reviews } from './Reviews';
 import { NavBarNotLogged } from './NavBarNotLogged';
 
 export const Wall = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
 
   // RECUPERACIÓN DE LA SESIÓN
   const [stateUser, setStateUser] = useState(null);
