@@ -1,6 +1,6 @@
 ## VERSIONES
 
-#### ALPHA 1.1
+#### ALPHA 1.2
 
 * Publicacion de Reseñas
 * Nuevos estilos con responsividad
