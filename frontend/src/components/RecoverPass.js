@@ -115,7 +115,6 @@ export const RecoverPass = () => {
                     {message && <p id="msgForm">{message}</p>}
                 </section>
             </main>
-            {confirmRecover()}
             <Footer />
         </div>
     );

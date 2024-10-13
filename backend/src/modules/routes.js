@@ -33,7 +33,7 @@ all.get('/:table/:order?/:correo?', (req, res) => {
     } else if (table == 'comentarioresena') {
         const id = req.params.order;
         const correo = decodeURIComponent(req.params.correo);
-        
+
         controller.reviewComments(id, correo)
             .then(answer => {
                 success(req, res, answer.rows, 200);
@@ -55,17 +55,28 @@ all.get('/:table/:order?/:correo?', (req, res) => {
 
 const read = express.Router();
 
-read.get('/:table/:column/:id', (req, res) => {
+read.get('/:all?/:table/:column/:id', (req, res) => {
     const table = req.params.table;
+    const all = req.params.all;
     const column = req.params.column;
     const id = decodeURIComponent(req.params.id);
-    controller.read(table, column, id)
-        .then(async answer => {
-            success(req, res, answer.rows[0], 200);
-        })
-        .catch(error => {
-            reject(req, res, error, 500);
-        });
+    if (all === "all") {
+        controller.read(table, column, id)
+            .then(async answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else {
+        controller.read(table, column, id)
+            .then(async answer => {
+                success(req, res, answer.rows[0], 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    }
 });
 
 const create = express.Router();

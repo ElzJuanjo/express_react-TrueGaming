@@ -11,12 +11,12 @@ export const Review = ({ resena }) => {
     const [stateUser, setStateUser] = useState(null);
     const [review, setReview] = useState({});
     const [id_review, setIdReview] = useState(id);
- 
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("LoggedUser"));
         if (user && user.loggedIn) {
             setStateUser(user);
-        } 
+        }
         if (resena) {
             setReview(resena)
             setIdReview(id)
@@ -53,25 +53,26 @@ export const Review = ({ resena }) => {
                 <div id='publicacion' >
                     <div>
                         <div id='headerPublicacion'>
-                            <a href=''>
+                            <a href={(review.correo === stateUser.user.correo) ? (`/myaccount`) : (`/users/${review.nickname}`)}>
                                 <div id='autorPublicacion'>
                                     <img src={review.avatar} />
                                     <div>
                                         <h2>{review.nickname}</h2>
-                                        <h4>{review.titulo_juego}</h4>
+                                        <a href={`/game`}>
+                                            <h4>{review.titulo_juego}</h4>
+                                        </a>
                                     </div>
                                 </div>
                             </a>
                             <div id='autorPublicacion'>
                                 <div>
                                     <h2>{review.puntuacion}/10</h2>
-                                    <h4>{review.fecha_resena.slice(0,10)}</h4>
+                                    <h4>{review.fecha_resena.slice(0, 10)}</h4>
                                 </div>
                             </div>
-
                         </div>
                         <h1>{review.titulo_resena}</h1>
-                        {review.imagen_resena!='none' ? (
+                        {review.imagen_resena !== 'none' ? (
                             <img src={review.imagen_resena} />
                         ) : (
                             <p></p>

@@ -53,14 +53,14 @@ header {
     z-index: 1;
     width: 100vw;
     max-width: 100%;
-    height: 18vh;
+    height: 12vh;
     max-height: 18%;
     background: var(--header);
     border-bottom: 2px solid var(--medio);
 }
 
 header img {
-    width: 75%;
+    width: 60%;
     margin-left: 20px;
 }
 
@@ -76,7 +76,7 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 18vh;
+    margin-top: 12vh;
     min-height: 75vh;
 }
 
@@ -252,6 +252,19 @@ button:hover {
     box-shadow: 0 0 5px var(--medio);
 }
 
+#icon {
+    color: var(--extra);
+}
+#icon:hover {
+    cursor: pointer;
+    color: var(--active);
+    transition: 1s;
+}
+
+#iconDisabled {
+    color: grey;
+}
+
 #iconAccount img {
     width: 100%;
     margin: 0;
@@ -282,9 +295,9 @@ button:hover {
     padding: 20px;
     box-shadow: 0 0 5px #000;
     display: flex;
+    width: 60vw;
     flex-direction: column;
-    width: 60%;
-    margin-left: 19%;
+    margin: 20px auto;
     border-radius: 20px;
 }
 
@@ -374,4 +387,82 @@ button:hover {
 #headerComentario div {
     display: flex;
     align-items: center;
+}
+
+/* VISTA DE USUARIOS (PENDIENTE A MEJORAR) */
+.usuarioHeader {
+    display: flex;
+    background-color: var(--medio);
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    padding: 1vw;
+    margin: 2vh;
+    align-items: center;
+}
+
+.usuarioHeader img {
+    width: 11vw;
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    aspect-ratio: 1 / 1;
+}
+
+.usuarioHeader div {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.usuarioBio {
+    background-color: var(--medio);
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    padding: 1vw;
+    padding-bottom: 2vw;
+    margin: 2vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.usuarioBio h1,p {
+    margin: 0;
+}
+
+.usuarioInfo {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--medio);
+    border-radius: 5px;
+    box-shadow: 0 0 5px black;
+    padding: 1vw;
+    margin: 2vh;
+    align-items: center;
+}
+.usuarioInfo div {
+    line-height: 0.5vw;
+}
+
+.seguir {
+    max-width: 6vw;
+    border-radius: 100px;
+}
+.seguido {
+    max-width: 6vw;
+    border-radius: 100px;
+    background-color: grey;
+}
+
+.usuarioVista {
+    text-align: center;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    background-color: var(--articulo);
+    padding: 1vh;
+    box-shadow: 0 0 5px black;
+    margin-top: 2vh;
+    padding-bottom: 2vh;
+    margin-bottom: 5vh;
+    margin-top: 120px;
 }

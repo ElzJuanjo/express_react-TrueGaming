@@ -47,7 +47,7 @@ export const HeaderLogged = () => {
                 </a>
                 <section id='loggedUser'>
                     <a id='iconHome' href="/"><FontAwesomeIcon icon={faHome} size='3x' /></a>
-                    <a id='iconAccount' href="/myAccount">
+                    <a id='iconAccount' href="/myaccount">
                         <img src={stateUser && stateUser.user && stateUser.user.avatar ? (stateUser.user.avatar) : (process.env.PUBLIC_URL + "/img/default_user.jpg")} alt='AVATAR'></img>
                         {/* {stateUser && stateUser.user && stateUser.user.correo ? (<h1>{stateUser.user.nickname}</h1>) : (<p>Cargando...</p>)} */}
                     </a>

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Footer } from './Footer';
 import { useState } from 'react';
 import { HeaderIndex } from './HeaderIndex';

@@ -1,7 +1,7 @@
 /* Tablet */
 @media (max-width:890px) {
     header img {
-        width: 100%;
+        width: 50%;
     }
 
     #headerPublicacion {
@@ -18,7 +18,7 @@
     }
 
     #iconAccount {
-        width: 20%;
+        width: 10%;
     }
 }
 

@@ -8,6 +8,8 @@ import { RecoverPass } from './components/RecoverPass';
 import { Logout } from './components/Logout';
 import { Upload } from './components/Upload';
 import { ReviewComments } from './components/ReviewComments';
+import { User } from './components/User';
+import { MyAccount } from './components/MyAccount';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/review/:id" element={<ReviewComments />} />
+          <Route path="/user/:nickname" element={<User />} />
+          <Route path="/myaccount" element={<MyAccount />} />
         </Routes>
       </Router>
     </div>
