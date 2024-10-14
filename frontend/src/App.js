@@ -10,11 +10,13 @@ import { Upload } from './components/Upload';
 import { ReviewComments } from './components/ReviewComments';
 import { User } from './components/User';
 import { MyAccount } from './components/MyAccount';
+import { CloseSession } from './components/CloseSession';
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <CloseSession></CloseSession>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />

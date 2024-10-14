@@ -6,6 +6,7 @@ import { HeaderLogged } from './HeaderLogged';
 import { NavBar } from './NavBar';
 import { Reviews } from './Reviews';
 import { NavBarNotLogged } from './NavBarNotLogged';
+import { CloseSession } from './CloseSession';
 
 export const Wall = () => {
 
@@ -15,7 +16,7 @@ export const Wall = () => {
     const user = localStorage.getItem("LoggedUser");
     if (user) {
       setStateUser(JSON.parse(user));
-    }
+    } 
   }, [])
 
   return (

@@ -53,7 +53,7 @@ export const Review = ({ resena }) => {
                 <div id='publicacion' >
                     <div>
                         <div id='headerPublicacion'>
-                            <a href={(review.correo === stateUser.user.correo) ? (`/myaccount`) : (`/users/${review.nickname}`)}>
+                            <a href={(review.correo === (stateUser && stateUser.user &&stateUser.user.correo)) ? (`/myaccount`) : (`/users/${review.nickname}`)}>
                                 <div id='autorPublicacion'>
                                     <img src={review.avatar} />
                                     <div>

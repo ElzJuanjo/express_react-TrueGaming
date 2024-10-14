@@ -42,11 +42,11 @@ export const HeaderLogged = () => {
     return (
         <div>
             <header>
-                <a href="/">
+                <a href="/wall">
                     <img id='logoLogged' src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" />
                 </a>
                 <section id='loggedUser'>
-                    <a id='iconHome' href="/"><FontAwesomeIcon icon={faHome} size='3x' /></a>
+                    <a id='iconHome' href="/wall"><FontAwesomeIcon icon={faHome} size='3x' /></a>
                     <a id='iconAccount' href="/myaccount">
                         <img src={stateUser && stateUser.user && stateUser.user.avatar ? (stateUser.user.avatar) : (process.env.PUBLIC_URL + "/img/default_user.jpg")} alt='AVATAR'></img>
                         {/* {stateUser && stateUser.user && stateUser.user.correo ? (<h1>{stateUser.user.nickname}</h1>) : (<p>Cargando...</p>)} */}

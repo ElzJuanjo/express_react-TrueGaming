@@ -5,8 +5,7 @@ export const Logout = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const user = {user:null,loggedIn:false}
-        localStorage.setItem("LoggedUser", JSON.stringify(user))
+        localStorage.removeItem('LoggedUser')
         navigate('/')
 
     }, [navigate]);

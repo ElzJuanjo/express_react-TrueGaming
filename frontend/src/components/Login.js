@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HeaderIndex } from './HeaderIndex'
 import { Footer } from './Footer'
 import { useNavigate } from 'react-router-dom';
+import { CloseSession } from './CloseSession';
 
 export const Login = () => {
-
+    const navigate = useNavigate();
     // FORMULARIO
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [message, setMessage] = useState('');
+    const [checkStayLogged, setCheckStayLogged] = useState(false);
 
     // VERIFICACIÓN CORREO
     const [enableToken, setEnableToken] = useState(false);
@@ -17,8 +19,6 @@ export const Login = () => {
 
     // PREVENCIÓN PYPASS
     const [key, setKey] = useState('');
-
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,9 +35,8 @@ export const Login = () => {
                 }).catch(err => false);
             if (verify) {
                 response.contrasena = ""
-                const stateData = { user: response, loggedIn: true }                //Guardado en la sesión
+                const stateData = { user: response, loggedIn: true, stayLogged: checkStayLogged, guest: false}                //Guardado en la sesión
                 localStorage.setItem("LoggedUser", JSON.stringify(stateData))       //Guardado en la sesión
-
                 const filterData = { title: 'reciente', order: 'r.fecha_resena' };
                 localStorage.setItem('Filter', JSON.stringify(filterData));
                 navigate('/wall');
@@ -125,6 +124,12 @@ export const Login = () => {
                             />
                         </div>
                         <button type="submit">Iniciar Sesión</button>
+                        <input
+                            type="checkbox"
+                            checked={checkStayLogged}
+                            onChange={(e) => setCheckStayLogged(e.target.checked)}
+                        />
+                        <h4>Mantener Sesión Iniciada</h4>
                     </form>
                     {message && <p id="msgForm">{message}</p>}
                     <p id="recuperar" onClick={sendToken}>Olvidé mi contraseña</p>
