@@ -5,7 +5,6 @@ import { routes } from "./src/modules/routes.js";
 import { encrypt } from "./src/modules/encrypt.js";
 import { sendEmails } from "./src/modules/email/token.js";
 import { uploads } from "./src/modules/upload.js";
-import multer from "multer";
 
 const app = express();
 
@@ -33,3 +32,6 @@ app.use('/change', sendEmails.sendChange);
 
 // UPLOAD
 app.use('/upload', uploads.upload);
+
+// API DE JUEGOS
+app.use('/igdb', routes.apiIGDB)

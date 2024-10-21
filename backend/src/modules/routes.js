@@ -1,9 +1,9 @@
 import express from "express";
 import { controller } from "../db/controller.js";
 import { success, reject } from "../response.js";
+import { igdb } from "./igdb.js";
 
 const all = express.Router();
-
 
 all.get('/:table/:order?/:correo?', (req, res) => {
     const table = req.params.table;
@@ -153,10 +153,24 @@ del.post('/:table/:column/:id', (req, res) => {
     }
 });
 
+const apiIGDB = express.Router();
+apiIGDB.get('/:game', (req, res) => {
+    const game = decodeURIComponent(req.params.game);
+
+    igdb.searchGame(game)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
 export const routes = {
     all,
     read,
     create,
     update,
-    del
+    del,
+    apiIGDB
 };
