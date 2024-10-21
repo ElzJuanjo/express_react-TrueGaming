@@ -97,7 +97,7 @@ export const ReviewComments = () => {
                     <h4>NO PUEDES COMENTAR SIN INICIAR SESIÓN</h4>
                 )}
                 {Array.isArray(comments) && comments.map((comment) =>
-                    <div key={comment.id_comentarioresena}>
+                    <div key={comment.id_comentario}>
                         <Comment comment={comment} loadCommentsLogged={loadCommentsLogged} loadReviewLogged={loadReviewLogged}></Comment>
                     </div>
                 )}

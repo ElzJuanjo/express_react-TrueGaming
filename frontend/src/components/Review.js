@@ -59,7 +59,7 @@ export const Review = ({ resena }) => {
                                     <div>
                                         <h2>{review.nickname}</h2>
                                         <a href={`/game`}>
-                                            <h4>{review.titulo_juego}</h4>
+                                            <h4>{review.nombre}</h4>
                                         </a>
                                     </div>
                                 </div>
@@ -71,9 +71,9 @@ export const Review = ({ resena }) => {
                                 </div>
                             </div>
                         </div>
-                        <h1>{review.titulo_resena}</h1>
+                        <h1>{review.titulo}</h1>
                         {review.imagen_resena !== 'none' ? (
-                            <img src={review.imagen_resena} />
+                            <img src={review.imagen} />
                         ) : (
                             <p></p>
                         )}

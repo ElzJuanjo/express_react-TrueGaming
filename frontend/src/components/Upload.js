@@ -117,7 +117,7 @@ export const Upload = () => {
                                 <option value="" defaultValue={null} disabled>Selecciona un juego</option>
                                 {games.map((game) => (
                                     <option key={game.id_juego} value={game.id_juego}>
-                                        {game.titulo_juego}
+                                        {game.nombre}
                                     </option>
                                 ))}
                             </select>
