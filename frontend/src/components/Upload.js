@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Footer } from './Footer';
 import { useState } from 'react';
-import { HeaderIndex } from './HeaderIndex';
 import { HeaderLogged } from './HeaderLogged';
 import Swal from 'sweetalert2';
 
@@ -47,9 +46,9 @@ export const Upload = () => {
             confirmButtonColor: 'green',
             confirmButtonText: 'Aceptar',
             customClass: {
-                popup: 'dark-popup', 
-                htmlContainer: 'dark-html', 
-                actions: 'dark-actions', 
+                popup: 'dark-popup',
+                htmlContainer: 'dark-html',
+                actions: 'dark-actions',
             },
         }).then((result) => {
             if (result.isDismissed || result.isConfirmed) {
@@ -102,7 +101,7 @@ export const Upload = () => {
 
     return (
         <div id='body'>
-            {stateUser && stateUser.loggedIn ? (<HeaderLogged></HeaderLogged>) : (<HeaderIndex></HeaderIndex>)}
+            <HeaderLogged></HeaderLogged>
             <main>
                 <section id="formulario">
                     <h1>PUBLICAR</h1>
@@ -122,6 +121,7 @@ export const Upload = () => {
                                 ))}
                             </select>
                         </div>
+                        <a href='/searchgame'>¿No encuentras un juego en ésta lista? Haz clic aquí para explorar más!</a>
                         <div>
                             <h3>Calificación:</h3>
                             <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} placeholder='De 1 a 10' required></input>
@@ -138,14 +138,14 @@ export const Upload = () => {
                         {uploadType === 'file' && (
                             <div>
                                 <h3>Imagen (Archivo):</h3>
-                                <input type="file" name="imgReview" id="imgReview" accept="image/*" multiple={false} required/>
+                                <input type="file" name="imgReview" id="imgReview" accept="image/*" multiple={false} required />
                             </div>
                         )}
 
                         {uploadType === 'url' && (
                             <div>
                                 <h3>Imagen (URL):</h3>
-                                <input type="url" name="urlReview" id="urlReview" placeholder="Ingresa la URL de la imagen" autoComplete='off' required/>
+                                <input type="url" name="urlReview" id="urlReview" placeholder="Ingresa la URL de la imagen" autoComplete='off' required />
                             </div>
                         )}
 

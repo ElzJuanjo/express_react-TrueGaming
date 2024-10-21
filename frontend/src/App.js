@@ -11,6 +11,7 @@ import { ReviewComments } from './components/ReviewComments';
 import { User } from './components/User';
 import { MyAccount } from './components/MyAccount';
 import { CloseSession } from './components/CloseSession';
+import { SearchIGDB } from './components/SearchIGDB';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/review/:id" element={<ReviewComments />} />
           <Route path="/user/:nickname" element={<User />} />
           <Route path="/myaccount" element={<MyAccount />} />
+          <Route path="/searchgame" element={<SearchIGDB />} />
         </Routes>
       </Router>
     </div>
