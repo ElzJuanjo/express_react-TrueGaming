@@ -36,7 +36,7 @@ export const Review = ({ resena }) => {
                 updatedReview = { ...review, liked: '0', total_likes: parseInt(review.total_likes) - 1 }
             } else {
                 const info = encodeURIComponent(`${review.id_resena},${correo}`);
-                await fetch(`http://localhost:4000/create/likeresenia/id_resena,correo_autor/${info}`, {
+                await fetch(`http://localhost:4000/create/likes/id_resena,correo_autor/${info}`, {
                     method: 'POST'
                 });
 

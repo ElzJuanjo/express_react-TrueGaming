@@ -30,7 +30,7 @@ all.get('/:table/:order?/:correo?', (req, res) => {
             .catch(error => {
                 reject(req, res, error, 500);
             });
-    } else if (table == 'comentarioresena') {
+    } else if (table == 'comentario') {
         const id = req.params.order;
         const correo = decodeURIComponent(req.params.correo);
 

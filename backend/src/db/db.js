@@ -68,9 +68,9 @@ const reviews = (order, sessionUserEmail) => {
     let query = `
     SELECT 
         r.id_resena,
-        r.titulo_resena,
-        j.titulo_juego,
-        r.imagen_resena,
+        r.titulo,
+        j.nombre,
+        r.imagen,
         r.resena,
         r.puntuacion,
         r.fecha_resena,
@@ -82,7 +82,7 @@ const reviews = (order, sessionUserEmail) => {
     if (sessionUserEmail) {
         query += `,
         (SELECT COUNT(DISTINCT l2.id_like)
-        FROM likeresenia l2
+        FROM likes l2
         WHERE l2.correo_autor = '${sessionUserEmail}' 
         AND l2.id_resena = r.id_resena) AS liked,
         COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
@@ -92,15 +92,15 @@ const reviews = (order, sessionUserEmail) => {
         FROM 
             resena r
         JOIN 
-            juego j ON r.id_juego_resena = j.id_juego
+            juego j ON r.id_juego = j.id_juego
         JOIN 
             usuario u ON r.correo_autor = u.correo
         LEFT JOIN 
-            likeresenia l ON r.id_resena = l.id_resena
+            likes l ON r.id_resena = l.id_resena
         LEFT JOIN 
-            comentarioresena c ON r.id_resena = c.id_resena
+            comentario c ON r.id_resena = c.id_resena
         GROUP BY 
-            r.id_resena, r.titulo_resena, j.titulo_juego, r.imagen_resena, 
+            r.id_resena, r.titulo, j.nombre, r.imagen, 
             r.resena, r.puntuacion, r.fecha_resena, u.nickname, u.avatar, u.correo
         ORDER BY 
             ${order} DESC;
@@ -119,9 +119,9 @@ const review = (id_resena, sessionUserEmail) => {
     let query = `
     SELECT 
         r.id_resena,
-        r.titulo_resena,
-        j.titulo_juego,
-        r.imagen_resena,
+        r.titulo,
+        j.nombre,
+        r.imagen,
         r.resena,
         r.puntuacion,
         r.fecha_resena,
@@ -133,7 +133,7 @@ const review = (id_resena, sessionUserEmail) => {
     if (sessionUserEmail) {
         query += `,
         (SELECT COUNT(DISTINCT l2.id_like)
-        FROM likeresenia l2
+        FROM likes l2
         WHERE l2.correo_autor = '${sessionUserEmail}' 
         AND l2.id_resena = r.id_resena) AS liked,
         COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
@@ -143,17 +143,17 @@ const review = (id_resena, sessionUserEmail) => {
         FROM 
             resena r
         JOIN 
-            juego j ON r.id_juego_resena = j.id_juego
+            juego j ON r.id_juego = j.id_juego
         JOIN 
             usuario u ON r.correo_autor = u.correo
         LEFT JOIN 
-            likeresenia l ON r.id_resena = l.id_resena
+            likes l ON r.id_resena = l.id_resena
         LEFT JOIN 
-            comentarioresena c ON r.id_resena = c.id_resena
+            comentario c ON r.id_resena = c.id_resena
         WHERE 
             r.id_resena = ${id_resena}
         GROUP BY 
-            r.id_resena, r.titulo_resena, j.titulo_juego, r.imagen_resena, 
+            r.id_resena, r.titulo, j.nombre, r.imagen, 
             r.resena, r.puntuacion, r.fecha_resena, u.nickname, u.avatar, u.correo
     `;
     return new Promise((resolve, reject) => {
@@ -170,7 +170,7 @@ const reviewComments = (id_resena, sessionUserEmail) => {
     let query = `
     SELECT 
         r.id_resena,
-        c1.id_comentarioresena,
+        c1.id_comentario,
         c1.comentario,
         c1.fecha_comentario,
         u.correo,
@@ -189,13 +189,13 @@ const reviewComments = (id_resena, sessionUserEmail) => {
         FROM 
             resena r
         JOIN 
-            comentarioresena c1 ON c1.id_resena = r.id_resena
+            comentario c1 ON c1.id_resena = r.id_resena
         JOIN 
             usuario u ON c1.correo_autor = u.correo
         WHERE 
             c1.id_resena = ${id_resena}
         GROUP BY 
-            r.id_resena, c1.id_comentarioresena, c1.comentario, 
+            r.id_resena, c1.id_comentario, c1.comentario, 
             c1.fecha_comentario, u.correo, u.nickname, u.avatar
         ORDER BY 
             c1.fecha_comentario DESC;
@@ -214,7 +214,7 @@ const deleteLike = (id_resena, correo_autor) => {
     return new Promise((resolve, reject) => {
         connection.query(`
             DELETE FROM
-                likeresenia
+                likes
             WHERE
                 id_resena = ${id_resena}
             AND

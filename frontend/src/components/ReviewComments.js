@@ -45,13 +45,13 @@ export const ReviewComments = () => {
     }
 
     const loadCommentsLogged = async () => {
-        const Comments = await fetch(`http://localhost:4000/all/comentarioresena/${id_review}/${encodeURIComponent(stateUser.user.correo)}`)
+        const Comments = await fetch(`http://localhost:4000/all/comentario/${id_review}/${encodeURIComponent(stateUser.user.correo)}`)
             .then(data => data.json()).catch(err => null);
         setComments(Comments);
     }
 
     const loadComments = async () => {
-        const Comments = await fetch(`http://localhost:4000/all/comentarioresena/${id_review}`)
+        const Comments = await fetch(`http://localhost:4000/all/comentario/${id_review}`)
             .then(data => data.json()).catch(err => null);
         setComments(Comments);
     }
@@ -64,7 +64,7 @@ export const ReviewComments = () => {
             comentario: writenComment,
             correo_autor: stateUser.user.correo
         }
-        const response = await fetch(`http://localhost:4000/create/comentarioresena/id_resena,comentario,correo_autor`, {
+        const response = await fetch(`http://localhost:4000/create/comentario/id_resena,comentario,correo_autor`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

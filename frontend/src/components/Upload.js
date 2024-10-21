@@ -86,7 +86,7 @@ export const Upload = () => {
             imagen_resena: image,
             correo_autor: stateUser.user.correo
         }
-        const response = await fetch(`http://localhost:4000/create/resena/titulo_resena,id_juego_resena,resena,puntuacion,imagen_resena,correo_autor`, {
+        const response = await fetch(`http://localhost:4000/create/resena/titulo,id_juego,resena,puntuacion,imagen,correo_autor`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
