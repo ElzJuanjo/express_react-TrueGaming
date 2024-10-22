@@ -52,7 +52,7 @@ export const SearchIGDB = () => {
         }
         const response = await fetch(`http://localhost:4000/read/categoria/id_categoria/${category}`)
             .then(data => data.json()).catch(err => null);
-        return response.nombre;
+        return (response) ? response.nombre : "Sin información.";
     }
 
     const defPlatform = async (list) => {
@@ -64,6 +64,10 @@ export const SearchIGDB = () => {
         for (let i of list) {
             const response = await fetch(`http://localhost:4000/read/plataforma/id_plataforma/${i}`)
                 .then(data => data.json()).catch(err => null);
+
+            if (!response) {
+                continue;
+            }
             if (i === list[list.length - 1]) {
                 listPlatforms += response.nombre += ".";
             } else {
@@ -83,6 +87,10 @@ export const SearchIGDB = () => {
         for (let i of list) {
             const response = await fetch(`http://localhost:4000/read/genero/id_genero/${i}`)
                 .then(data => data.json()).catch(err => null);
+
+            if (!response) {
+                continue;
+            }
             if (i === list[list.length - 1]) {
                 listGenres += response.nombre += ".";
             } else {

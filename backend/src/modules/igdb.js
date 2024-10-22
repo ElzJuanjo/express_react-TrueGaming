@@ -41,7 +41,7 @@ async function searchGame(juego) {
                 'Client-ID': clientId,
                 'Authorization': `Bearer ${token}`,
             },
-            body: `fields id, name, category, first_release_date, platforms, genres; limit 200; search "${juego}"; where category != 3 & category != 5 & category != 6 & category != 7 & category != 10 & category != 13 & category != 14;`
+            body: `fields id, name, category, first_release_date, platforms, genres; limit 100; search "${juego}"; where category != 3 & category != 5 & category != 6 & category != 7 & category != 10 & category != 13 & category != 14;`
         });
 
         const data = await response.json();
