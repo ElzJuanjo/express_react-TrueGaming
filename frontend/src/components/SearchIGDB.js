@@ -47,7 +47,7 @@ export const SearchIGDB = () => {
     }
 
     const defCategory = async (category) => {
-        if (!category) {
+        if (category == null) {
             return "Sin información.";
         }
         const response = await fetch(`http://localhost:4000/read/categoria/id_categoria/${category}`)

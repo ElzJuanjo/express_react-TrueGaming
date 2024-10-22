@@ -35,7 +35,7 @@ export const Login = () => {
                 }).catch(err => false);
             if (verify) {
                 response.contrasena = ""
-                const stateData = { user: response, loggedIn: true, stayLogged: checkStayLogged, guest: false}                //Guardado en la sesión
+                const stateData = { user: response, loggedIn: true, stayLogged: checkStayLogged, guest: false }                //Guardado en la sesión
                 localStorage.setItem("LoggedUser", JSON.stringify(stateData))       //Guardado en la sesión
                 const filterData = { title: 'reciente', order: 'r.fecha_resena' };
                 localStorage.setItem('Filter', JSON.stringify(filterData));
@@ -124,12 +124,14 @@ export const Login = () => {
                             />
                         </div>
                         <button type="submit">Iniciar Sesión</button>
-                        <input
-                            type="checkbox"
-                            checked={checkStayLogged}
-                            onChange={(e) => setCheckStayLogged(e.target.checked)}
-                        />
-                        <h4>Mantener Sesión Iniciada</h4>
+                        <div id="checkBox">
+                            <input
+                                type="checkbox"
+                                checked={checkStayLogged}
+                                onChange={(e) => setCheckStayLogged(e.target.checked)}
+                            />
+                            <h4>Mantener Sesión Iniciada</h4>
+                        </div>
                     </form>
                     {message && <p id="msgForm">{message}</p>}
                     <p id="recuperar" onClick={sendToken}>Olvidé mi contraseña</p>
