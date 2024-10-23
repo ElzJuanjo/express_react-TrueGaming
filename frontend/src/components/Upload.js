@@ -4,10 +4,19 @@ import { Footer } from './Footer';
 import { useState } from 'react';
 import { HeaderLogged } from './HeaderLogged';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 export const Upload = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [title, setTitle] = useState('');
+    const [game, setGame] = useState('');
+    const [review, setReview] = useState('');
+    const [score, setScore] = useState('');
+    const [uploadType, setUploadType] = useState('file')
+    const [newGame, setNewGame] = useState({ id: null })
 
     // RECUPERACIÓN DE LA SESIÓN
     const [stateUser, setStateUser] = useState(null);
@@ -16,7 +25,12 @@ export const Upload = () => {
         if (user) {
             setStateUser(JSON.parse(user));
         }
-        loadGames()
+        const newJuego = sessionStorage.getItem('newGame')
+        if (newJuego && newJuego.id !== null) {
+            setNewGame(JSON.parse(newJuego))
+        } else {
+            loadGames()
+        }
     }, [])
 
     // No permite el acceso si no ha iniciado sesión
@@ -32,12 +46,6 @@ export const Upload = () => {
             .then(data => data.json()).catch(err => null);
         setGames(games)
     }
-
-    const [title, setTitle] = useState('');
-    const [game, setGame] = useState('');
-    const [review, setReview] = useState('');
-    const [score, setScore] = useState('');
-    const [uploadType, setUploadType] = useState('file')
 
     const confirmUpload = () => {
         Swal.fire({
@@ -59,7 +67,18 @@ export const Upload = () => {
 
     const handleSubmit = async (e) => {
         let image = ""
+        let juegoResena = null
         e.preventDefault();
+        if (newGame && newGame.id !== null) {
+            await saveGame(newGame)
+            console.log('Setting game id to:', newGame.id);
+            await setGame(newGame.id)
+            juegoResena = newGame.id
+            sessionStorage.setItem('newGame', {id:null})
+            setGame({id:null})
+        } else {
+            juegoResena = game
+        }
         if (uploadType === 'file') {
             const formData = new FormData();
             if (e.target.imgReview.files.length > 0) {
@@ -79,7 +98,7 @@ export const Upload = () => {
 
         const data = {
             titulo_resena: title,
-            id_juego_resena: game,
+            id_juego_resena: juegoResena,
             resena: review,
             puntuacion: score,
             imagen_resena: image,
@@ -92,12 +111,40 @@ export const Upload = () => {
             },
             body: JSON.stringify(data),
         })
+        deleteNewGame()
         confirmUpload();
+    }
+
+    const saveGame = async (juego) => {
+        let info = `${juego.id},${juego.category},${juego.first_release_date},${juego.name}`;
+        await fetch(`http://localhost:4000/create/juego/id_juego,id_categoria,fecha_lanzamiento,nombre/${encodeURIComponent(info)}`, {
+            method: 'POST'
+        });
+        for (let platform of juego.platforms) {
+            info = `${juego.id},${platform}`;
+            info = encodeURIComponent(info)
+            await fetch(`http://localhost:4000/create/plataformas_juego/id_juego,id_plataforma/${info}`, {
+                method: 'POST'
+            });
+        }
+        for (let genre of juego.genres) {
+            info = `${juego.id},${genre}`
+            info = encodeURIComponent(info)
+            await fetch(`http://localhost:4000/create/generos_juego/id_juego,id_genero/${info}`, {
+                method: 'POST'
+            });
+        }
     }
 
     const handleOptionChange = (type) => {
         setUploadType(type);
     };
+
+    const deleteNewGame = async () => {
+        sessionStorage.removeItem('newGame');
+        setNewGame({ id: null })
+        loadGames()
+    }
 
     return (
         <div id='body'>
@@ -112,16 +159,27 @@ export const Upload = () => {
                         </div>
                         <div>
                             <h3>Juego:</h3>
-                            <select value={game} onChange={(e) => setGame(e.target.value)} required>
-                                <option value="" defaultValue={null} disabled>Selecciona un juego</option>
-                                {games.map((game) => (
-                                    <option key={game.id_juego} value={game.id_juego}>
-                                        {game.nombre}
-                                    </option>
-                                ))}
-                            </select>
+                            {(newGame && newGame.id === null) ? (
+                                <div className='gameSelect'>
+                                    <div>
+                                        <select value={game} onChange={(e) => setGame(e.target.value)} required>
+                                            <option value="" defaultValue={null} disabled>Selecciona un juego</option>
+                                            {games.map((game) => (
+                                                <option key={game.id_juego} value={game.id_juego}>
+                                                    {game.nombre}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <a href='/searchgame'>¿No encuentras un juego en ésta lista? Haz clic aquí para explorar más!</a>
+                                </div>
+                            ) : (
+                                <div className='newGame'>
+                                    <h4>{newGame.name}</h4>
+                                    <FontAwesomeIcon icon={faX} style={{ color: "#ff0000", margin: '10px', cursor: 'pointer' }} onClick={deleteNewGame} />
+                                </div>
+                            )}
                         </div>
-                        <a href='/searchgame'>¿No encuentras un juego en ésta lista? Haz clic aquí para explorar más!</a>
                         <div>
                             <h3>Calificación:</h3>
                             <input type="number" max="10" min="0" value={score} onChange={(e) => setScore(e.target.value)} placeholder='De 1 a 10' required></input>

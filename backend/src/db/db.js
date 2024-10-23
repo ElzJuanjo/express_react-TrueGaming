@@ -85,7 +85,7 @@ const reviews = (order, sessionUserEmail) => {
         FROM likes l2
         WHERE l2.correo_autor = '${sessionUserEmail}' 
         AND l2.id_resena = r.id_resena) AS liked,
-        COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
+        COUNT(DISTINCT c.id_comentario) AS total_comentarios
         `;
     }
     query += `

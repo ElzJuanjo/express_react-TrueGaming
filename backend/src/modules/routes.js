@@ -85,6 +85,7 @@ create.post('/:table/:columns/:data', (req, res) => {
     const table = req.params.table;
     const columns = req.params.columns;
     const data = decodeURIComponent(req.params.data);
+    console.log(`Table: ${table}, Columns: ${columns}, Data: ${data}`);
     controller.create(table, columns, data)
         .then(answer => {
             success(req, res, answer, 200);

@@ -99,7 +99,7 @@ export const Register = () => {
                 .then(data => data.json()).catch(err => null);
             const pass = encrypted.message;
             const avatar = "https://www.4x4.ec/overlandecuador/wp-content/uploads/2017/06/default-user-icon-8.jpg";
-            const bio = "Hi. I am new to TrueGaming!"; // ESTOS DOS NO SE ESTÁN USANDO PORQUE NO DEJA HACER LA QUERY
+            const bio = "Hi. I am new to TrueGaming!"; 
             let info = `${key},${user},${pass},${avatar},${bio}`;
             info = encodeURIComponent(info);
             await fetch(`http://localhost:4000/create/usuario/correo,nickname,contrasena,avatar,bio/${info}`, {
@@ -114,7 +114,6 @@ export const Register = () => {
     return (
         <div id='body'>
             <HeaderIndex></HeaderIndex>
-
             <main>
                 <section id="formulario">
                     <h1>REGISTRARSE</h1>
