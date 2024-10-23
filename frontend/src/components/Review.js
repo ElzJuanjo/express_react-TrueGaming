@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faX } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import Swal from 'sweetalert2';
 
-export const Review = ({ resena }) => {
+export const Review = ({ resena, myaccount, loadReviews }) => {
     const { id } = useParams()
 
     const [stateUser, setStateUser] = useState(null);
@@ -47,7 +48,41 @@ export const Review = ({ resena }) => {
         }
     }
 
+    const deleteComment = async() => {
+        const response = await fetch(`http://localhost:4000/delete/resena/id_resena/${encodeURIComponent(review.id_resena)}`, {
+            method: 'POST'
+        })
+            .then(data => data.json()).catch(err => null);
+        if (response) {
+            loadReviews()
+        }
+    }
+
+    const confirmDelete = () => {
+        Swal.fire({
+            title: '¿Seguro quieres eliminar este comentario?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'dark-popup', 
+                title: 'dark-title',  
+                htmlContainer: 'dark-html', 
+                actions: 'dark-actions', 
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteComment();
+            }
+        });
+    };
+
     return (
+        
         <div>
             {(review && review.id_resena) ? (
                 <div id='publicacion' >
@@ -66,13 +101,17 @@ export const Review = ({ resena }) => {
                             </a>
                             <div id='autorPublicacion'>
                                 <div>
-                                    <h2>{review.puntuacion}/10</h2>
+                                    {((stateUser && stateUser.user && stateUser.user.correo === review.correo) && myaccount) ? (
+                                        <h2>{review.puntuacion}/10 <FontAwesomeIcon icon={faX} size='xl' style={{color: "#ff0000", margin:'10px', cursor:'pointer'}} onClick={confirmDelete}/></h2>
+                                    ) : (
+                                        <h2>{review.puntuacion}/10</h2>
+                                    )}
                                     <h4>{review.fecha_resena.slice(0, 10)}</h4>
                                 </div>
                             </div>
                         </div>
                         <h1>{review.titulo}</h1>
-                        {review.imagen_resena !== 'none' ? (
+                        {review.imagen !== 'none' ? (
                             <img src={review.imagen} />
                         ) : (
                             <p></p>

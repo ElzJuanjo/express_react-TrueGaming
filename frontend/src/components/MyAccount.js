@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitch, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import Swal from 'sweetalert2';
 import { Footer } from './Footer';
+import { AccountReviews } from './AccountReviews';
 
 
 export const MyAccount = () => {
@@ -36,7 +37,6 @@ export const MyAccount = () => {
             .then(data => data.json()).catch(err => null);
 
         if (followers) {
-            console.log(followers)
             setFollowers(followers)
         }
         if (following) {
@@ -135,7 +135,7 @@ export const MyAccount = () => {
                     }).then(res => {
                         window.location.reload();
                     });
-                }   
+                }
 
             }
         })
@@ -152,63 +152,66 @@ export const MyAccount = () => {
     return (
         <div id="body">
             <HeaderLogged></HeaderLogged>
-            <div className='usuarioVista'>
-                <div className='usuarioHeader'>
-                    <img src={stateUser && stateUser.user && stateUser.user.avatar} />
-                    <div className='itemInfo'>
-                        <div className='edit'>
-                            <h1>{stateUser && stateUser.user && stateUser.user.nickname} <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeNickname} /></h1>
-                        </div>
-                        <div className='edit'>
-                            <h3>{stateUser && stateUser.user && stateUser.user.correo} </h3>
+            <main>
+                <div className='usuarioVista'>
+                    <div className='usuarioHeader'>
+                        <img src={stateUser && stateUser.user && stateUser.user.avatar} />
+                        <div className='itemInfo'>
+                            <div className='edit'>
+                                <h1>{stateUser && stateUser.user && stateUser.user.nickname} <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeNickname} /></h1>
+                            </div>
+                            <div className='edit'>
+                                <h3>{stateUser && stateUser.user && stateUser.user.correo} </h3>
 
-                        </div>
-                        <div className='edit'>
-                            <h4>True Gamer desde: {stateUser && stateUser.user && stateUser.user.fecha_creacion.slice(0, 10)}</h4>
+                            </div>
+                            <div className='edit'>
+                                <h4>True Gamer desde: {stateUser && stateUser.user && stateUser.user.fecha_creacion.slice(0, 10)}</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className='usuarioInfo'>
+                    <div className='usuarioInfo'>
+                        <div>
+                            <a href=''><h2>Seguidores: {followers.length}</h2></a>
+                        </div>
+                        <div>
+                            <a href=''><h2>Seguidos: {following.length}</h2></a>
+                        </div>
+                    </div>
+                    <div className='usuarioBio'>
+                        <h2>Sobre mí</h2>
+                        <div className='edit'>
+                            <p>{stateUser && stateUser.user && stateUser.user.bio}</p>
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeBio} />
+                        </div>
+                    </div>
+                    <div className='usuarioInfo'>
+                        <div className='itemInfo'>
+                            <div className='edit'>
+                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.youtube !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
+                            </div>
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                        </div>
+                        <div className='itemInfo'>
+                            <div className='edit'>
+                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.discord !== null) ? ('icon') : ('iconDisabled')} icon={faDiscord} size="2xl" />
+                            </div>
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                        </div>
+                        <div className='itemInfo'>
+                            <div className='edit'>
+                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.twitch !== null) ? ('icon') : ('iconDisabled')} icon={faTwitch} size="2xl" />
+                            </div>
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                        </div>
+                    </div>
                     <div>
-                        <a href=''><h2>Seguidores: {followers.length}</h2></a>
-                    </div>
-                    <div>
-                        <a href=''><h2>Seguidos: {following.length}</h2></a>
-                    </div>
-                </div>
-                <div className='usuarioBio'>
-                    <h2>Sobre mí</h2>
-                    <div className='edit'>
-                        <p>{stateUser && stateUser.user && stateUser.user.bio}</p>
-                        <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeBio} />
+                        <button>Cambiar Foto</button>
+                        <button>Cambiar Contrasena</button>
+                        <button className='red'>ELIMINAR CUENTA</button>
                     </div>
                 </div>
-                <div className='usuarioInfo'>
-                    <div className='itemInfo'>
-                        <div className='edit'>
-                            <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.youtube !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
-                        </div>
-                        <FontAwesomeIcon id="icon" icon={faPenToSquare} />
-                    </div>
-                    <div className='itemInfo'>
-                        <div className='edit'>
-                            <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.discord !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
-                        </div>
-                        <FontAwesomeIcon id="icon" icon={faPenToSquare} />
-                    </div>
-                    <div className='itemInfo'>
-                        <div className='edit'>
-                            <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.twitch !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
-                        </div>
-                        <FontAwesomeIcon id="icon" icon={faPenToSquare} />
-                    </div>
-                </div>
-                <div>
-                    <button>Cambiar Foto</button>
-                    <button>Cambiar Contrasena</button>
-                    <button className='red'>ELIMINAR CUENTA</button>
-                </div>
-            </div>
+                <AccountReviews></AccountReviews>
+            </main>
             <Footer></Footer>
         </div>
     )

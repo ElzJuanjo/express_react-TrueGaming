@@ -115,6 +115,59 @@ const reviews = (order, sessionUserEmail) => {
     });
 }
 
+const accountReviews = (order, sessionUserEmail, email) => {
+    let query = `
+    SELECT 
+        r.id_resena,
+        r.titulo,
+        j.nombre,
+        r.imagen,
+        r.resena,
+        r.puntuacion,
+        r.fecha_resena,
+        u.nickname,
+        u.correo,
+        u.avatar,
+        COUNT(DISTINCT l.id_like) AS total_likes
+    `;
+    if (sessionUserEmail) {
+        query += `,
+        (SELECT COUNT(DISTINCT l2.id_like)
+        FROM likes l2
+        WHERE l2.correo_autor = '${sessionUserEmail}' 
+        AND l2.id_resena = r.id_resena) AS liked,
+        COUNT(DISTINCT c.id_comentario) AS total_comentarios
+        `;
+    }
+    query += `
+        FROM 
+            resena r
+        JOIN 
+            juego j ON r.id_juego = j.id_juego
+        JOIN 
+            usuario u ON r.correo_autor = u.correo
+        LEFT JOIN 
+            likes l ON r.id_resena = l.id_resena
+        LEFT JOIN 
+            comentario c ON r.id_resena = c.id_resena
+        WHERE
+            r.correo_autor = '${email}'
+        GROUP BY 
+            r.id_resena, r.titulo, j.nombre, r.imagen, 
+            r.resena, r.puntuacion, r.fecha_resena, u.nickname, u.avatar, u.correo
+        ORDER BY 
+            ${order} DESC;
+    `;
+    return new Promise((resolve, reject) => {
+        connection.query(query, (error, results) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(results);
+        });
+    });
+}
+
 const review = (id_resena, sessionUserEmail) => {
     let query = `
     SELECT 
@@ -136,7 +189,7 @@ const review = (id_resena, sessionUserEmail) => {
         FROM likes l2
         WHERE l2.correo_autor = '${sessionUserEmail}' 
         AND l2.id_resena = r.id_resena) AS liked,
-        COUNT(DISTINCT c.id_comentarioresena) AS total_comentarios
+        COUNT(DISTINCT c.id_comentario) AS total_comentarios
         `;
     }
     query += `
@@ -236,6 +289,7 @@ export const crud = {
     update,
     del,
     reviews,
+    accountReviews,
     reviewComments,
     review,
     deleteLike

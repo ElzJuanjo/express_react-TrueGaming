@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { Review } from './Review';
 
-export const Reviews = () => {
-
+export const AccountReviews = () => {
     // RECUPERACIÓN DE LA SESIÓN
     const [stateUser, setStateUser] = useState(null);
     const [filter, setFilter] = useState('r.fecha_resena');
@@ -14,25 +13,17 @@ export const Reviews = () => {
         setFilter(filter);
         if (user && user.loggedIn) {
             setStateUser(user);
-        } else {
-            loadReviews();
         }
     }, [])
 
     useEffect(() => {
-        if (stateUser && stateUser.loggedIn) {
-            loadReviewsLogged();
+        if (stateUser && stateUser.user) {
+            loadReviews()
         }
-    }, [stateUser]);
-
-    const loadReviewsLogged = async () => {
-        const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}/${encodeURIComponent(stateUser.user.correo)}`)
-            .then(data => data.json()).catch(err => null);
-        setReviews(applyFilter);
-    }
+    })
 
     const loadReviews = async () => {
-        const applyFilter = await fetch(`http://localhost:4000/all/reviews/${filter}`)
+        const applyFilter = await fetch(`http://localhost:4000/all/accountreviews/${filter}/${encodeURIComponent(stateUser.user.correo)}/${encodeURIComponent(stateUser.user.correo)}`)
             .then(data => data.json()).catch(err => null);
         setReviews(applyFilter);
     }
@@ -40,7 +31,7 @@ export const Reviews = () => {
     return (
         <div>
             {Array.isArray(reviews) && reviews.map((review) =>
-                <Review key={review.id_resena} resena={review} myaccount={false}></Review>
+                <Review key={review.id_resena} resena={review} myaccount={true} loadReviews={loadReviews}></Review>
             )}
         </div>
     )

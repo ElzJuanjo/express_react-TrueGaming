@@ -5,7 +5,7 @@ import { igdb } from "./igdb.js";
 
 const all = express.Router();
 
-all.get('/:table/:order?/:correo?', (req, res) => {
+all.get('/:table/:order?/:correo?/:correo2?', (req, res) => {
     const table = req.params.table;
 
     if (table == 'reviews') {
@@ -13,6 +13,18 @@ all.get('/:table/:order?/:correo?', (req, res) => {
         const correo = decodeURIComponent(req.params.correo);
 
         controller.reviews(order, correo)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else if (table == 'accountreviews') {
+        const order = req.params.order;
+        const loggedCorreo = decodeURIComponent(req.params.correo);
+        const correo = decodeURIComponent(req.params.correo2)
+
+        controller.accountReviews(order, loggedCorreo, correo)
             .then(answer => {
                 success(req, res, answer.rows, 200);
             })

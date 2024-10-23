@@ -8,10 +8,10 @@ import { RecoverPass } from './components/RecoverPass';
 import { Logout } from './components/Logout';
 import { Upload } from './components/Upload';
 import { ReviewComments } from './components/ReviewComments';
-import { User } from './components/User';
 import { MyAccount } from './components/MyAccount';
 import { CloseSession } from './components/CloseSession';
 import { SearchIGDB } from './components/SearchIGDB';
+import { User } from './components/User';
 
 function App() {
   return (

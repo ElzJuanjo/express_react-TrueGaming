@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 export const Comment = ({ comment,loadCommentsLogged,loadReviewLogged }) => {
 
     const deleteComment = async() => {
-        const response = await fetch(`http://localhost:4000/delete/comentario/id_comentario/${encodeURIComponent(comment.id_comentarioresena)}`, {
+        const response = await fetch(`http://localhost:4000/delete/comentario/id_comentario/${encodeURIComponent(comment.id_comentario)}`, {
             method: 'POST'
         })
             .then(data => data.json()).catch(err => null);
