@@ -12,6 +12,8 @@ import { MyAccount } from './components/MyAccount';
 import { CloseSession } from './components/CloseSession';
 import { SearchIGDB } from './components/SearchIGDB';
 import { User } from './components/User';
+import { SearchGameInDB } from './components/SearchGameInDB';
+import { Game } from './components/Game';
 
 function App() {
   return (
@@ -27,9 +29,11 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/review/:id" element={<ReviewComments />} />
-          <Route path="/user/:nickname" element={<User />} />
+          <Route path="/users/:nickname" element={<User />} />
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/searchgame" element={<SearchIGDB />} />
+          <Route path="/searchgameindb" element={<SearchGameInDB />}></Route>
+          <Route path="/game/:id" element={<Game />}></Route>
         </Routes>
       </Router>
     </div>

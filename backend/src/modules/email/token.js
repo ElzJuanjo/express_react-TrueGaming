@@ -121,7 +121,61 @@ sendChange.post('/:email/:title', async (req, res) => {
         });
 });
 
+const htmlNotification = (user1, user2) => `
+            <div style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" style="padding: 20px 0;">
+                            <table width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); padding: 30px;">
+                                <tr>
+                                    <td align="center" style="font-size: 24px; color: #2c3e50; padding-bottom: 20px;">
+                                        <img src="https://i.ibb.co/Gp2wwkY/logo.png" alt="True Gaming" style="max-width: 200px; margin-bottom: 20px;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 16px; color: #7f8c8d; text-align: center; padding-bottom: 30px;">
+                                        Hola ${user1}. Parece que ${user2} ha publicado una nueva reseña, ven a echarle un vistazo.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+`;
+
+const executeNotification = async (receiver, title, user1, user2) => {
+    try {
+        const content = htmlNotification(user1, user2);
+        await sendEmail(receiver, title, content);
+    } catch (error) {
+        console.error("Error in executeNotification:", error);
+        throw error;
+    }
+};
+
+
+const sendNotification = express.Router()
+
+sendNotification.post('/:email/:title/:user1/:user2', async (req, res) => {
+    const email = decodeURIComponent(req.params.email);
+    const title = req.params.title;
+    const user1 = req.params.user1;
+    const user2 = req.params.user2;
+    console.log(email,title,user1,user2)
+
+
+    await executeNotification(email, title, user1, user2)
+        .then(answer => {
+            success(req, res, answer, 200);
+        })
+        .catch(error => {
+            reject(req, res, error, 500);
+        });
+});
+
 export const sendEmails = {
     sendToken,
-    sendChange
+    sendChange,
+    sendNotification
 };

@@ -53,6 +53,37 @@ all.get('/:table/:order?/:correo?/:correo2?', (req, res) => {
             .catch(error => {
                 reject(req, res, error, 500);
             });
+    } else if (table == 'juegos' && req.params.order == 'search') {
+        const search = decodeURIComponent(req.params.correo);
+
+        controller.getGamesByName(search)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else if (table == 'juego' && req.params.order) {
+        const id = req.params.order;
+
+        controller.readGame(id)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
+    } else if (table == 'reviewsGame') {
+        const id = req.params.correo;
+        const correo = decodeURIComponent(req.params.correo2);
+
+        controller.reviewsGame(id, correo)
+            .then(answer => {
+                success(req, res, answer.rows, 200);
+            })
+            .catch(error => {
+                reject(req, res, error, 500);
+            });
     }
     else {
         controller.all(table)

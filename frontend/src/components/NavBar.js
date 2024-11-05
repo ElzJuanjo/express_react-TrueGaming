@@ -29,8 +29,8 @@ export const NavBar = ({ name }) => {
             <div>
                 <h3>Hola {name}, ¿Qué quieres hacer hoy?</h3>
             </div>
-            <a href="/searchUsers"><button>Buscar Usuario</button></a>
-            <a href="/upload"><button>Publicar Algo</button></a>
+            <a href="/searchgameindb"><button>Buscar Juego</button></a>
+            <a href="/upload"><button>Publicar Reseña</button></a>
             <div>
                 <form onSubmit={handleSubmit}>
                     <h3>Ordenar por:</h3>

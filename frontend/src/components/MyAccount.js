@@ -8,12 +8,14 @@ import { faDiscord, faTwitch, faYoutube } from '@fortawesome/free-brands-svg-ico
 import Swal from 'sweetalert2';
 import { Footer } from './Footer';
 import { AccountReviews } from './AccountReviews';
+import { useNavigate } from 'react-router-dom';
 
 
 export const MyAccount = () => {
 
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
+    const navigate = useNavigate();
 
     // GET SESSION
     const [stateUser, setStateUser] = useState(null);
@@ -27,6 +29,9 @@ export const MyAccount = () => {
     useEffect(() => {
         if (stateUser) {
             getFollows();
+        }
+        if (stateUser && !stateUser.loggedIn) {
+            navigate('/');
         }
     }, [stateUser]);
 
@@ -154,6 +159,7 @@ export const MyAccount = () => {
             <HeaderLogged></HeaderLogged>
             <main>
                 <div className='usuarioVista'>
+                    <h1>MI CUENTA</h1>
                     <div className='usuarioHeader'>
                         <img src={stateUser && stateUser.user && stateUser.user.avatar} />
                         <div className='itemInfo'>
@@ -207,10 +213,14 @@ export const MyAccount = () => {
                     <div>
                         <button>Cambiar Foto</button>
                         <button>Cambiar Contrasena</button>
-                        <button className='red'>ELIMINAR CUENTA</button>
                     </div>
                 </div>
-                <AccountReviews></AccountReviews>
+                <h2>TUS RESEÑAS</h2>
+                {(stateUser && stateUser.user && stateUser.user.correo) ? (
+                    <AccountReviews email={stateUser.user.correo} myaccount={true}></AccountReviews>
+                ) : (
+                    <h4>CARGANDO...</h4>
+                )}
             </main>
             <Footer></Footer>
         </div>

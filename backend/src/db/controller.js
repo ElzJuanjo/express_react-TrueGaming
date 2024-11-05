@@ -47,6 +47,18 @@ const reviewComments = (id_resena, sessionUserEmail) => {
     return crud.reviewComments(id_resena,sessionUserEmail);
 }
 
+const getGamesByName = (search) => {
+    return crud.getGamesByName(search)
+}
+
+const reviewsGame = (id_juego, sessionUserEmail) => {
+    return crud.reviewsGame(id_juego,sessionUserEmail)
+}
+
+const readGame = (id) => {
+    return crud.readGame(id)
+}
+
 export const controller = {
     all,
     create,
@@ -58,5 +70,8 @@ export const controller = {
     reviews,
     accountReviews,
     reviewComments,
+    getGamesByName,
+    readGame,
+    reviewsGame,
     review
 }

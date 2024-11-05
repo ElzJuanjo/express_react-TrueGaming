@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Footer } from './Footer';
 import { useState } from 'react';
 import { HeaderLogged } from './HeaderLogged';
@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 export const Upload = () => {
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
@@ -74,8 +73,8 @@ export const Upload = () => {
             console.log('Setting game id to:', newGame.id);
             await setGame(newGame.id)
             juegoResena = newGame.id
-            sessionStorage.setItem('newGame', {id:null})
-            setGame({id:null})
+            sessionStorage.setItem('newGame', { id: null })
+            setGame({ id: null })
         } else {
             juegoResena = game
         }
@@ -104,15 +103,16 @@ export const Upload = () => {
             imagen_resena: image,
             correo_autor: stateUser.user.correo
         }
-        const response = await fetch(`http://localhost:4000/create/resena/titulo,id_juego,resena,puntuacion,imagen,correo_autor`, {
+        await fetch(`http://localhost:4000/create/resena/titulo,id_juego,resena,puntuacion,imagen,correo_autor`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         })
-        deleteNewGame()
+        deleteNewGame();
         confirmUpload();
+        sendNotifications();
     }
 
     const saveGame = async (juego) => {
@@ -144,6 +144,22 @@ export const Upload = () => {
         sessionStorage.removeItem('newGame');
         setNewGame({ id: null })
         loadGames()
+    }
+
+    const sendNotifications = async () => {
+        const followers = await fetch(`http://localhost:4000/read/all/seguidor/correo_seguido/${encodeURIComponent(stateUser.user.correo)}`)
+            .then(data => data.json()).catch(err => null);
+        followers.map(follower => {
+            sendNotification(follower.correo_seguidor, stateUser.user.nickname)
+        })
+    }
+
+    const sendNotification = async (email,user2) => {
+        const user1 = await fetch(`http://localhost:4000/read/usuario/correo/${encodeURIComponent(email)}`)
+            .then(data => data.json()).catch(err => null);
+        const response = fetch(`http://localhost:4000/notify/${encodeURIComponent(email)}/Nueva%20Reseña%20de%20alguien%20que%20sigues/${encodeURIComponent(user1.nickname)}/${encodeURIComponent(user2)}`, {
+            method: 'POST'
+        });
     }
 
     return (

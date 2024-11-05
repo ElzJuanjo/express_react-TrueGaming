@@ -29,6 +29,7 @@ app.use('/encrypt', encrypt.encrypted);
 app.use('/verify', encrypt.verify);
 app.use('/token', sendEmails.sendToken);
 app.use('/change', sendEmails.sendChange);
+app.use('/notify', sendEmails.sendNotification);
 
 // UPLOAD
 app.use('/upload', uploads.upload);

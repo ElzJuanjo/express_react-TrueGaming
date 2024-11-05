@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faX } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 
 export const Review = ({ resena, myaccount, loadReviews }) => {
     const { id } = useParams()
+
+    const navigate = useNavigate()
 
     const [stateUser, setStateUser] = useState(null);
     const [review, setReview] = useState({});
@@ -48,7 +50,7 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
         }
     }
 
-    const deleteComment = async() => {
+    const deleteComment = async () => {
         const response = await fetch(`http://localhost:4000/delete/resena/id_resena/${encodeURIComponent(review.id_resena)}`, {
             method: 'POST'
         })
@@ -69,10 +71,10 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
             customClass: {
-                popup: 'dark-popup', 
-                title: 'dark-title',  
-                htmlContainer: 'dark-html', 
-                actions: 'dark-actions', 
+                popup: 'dark-popup',
+                title: 'dark-title',
+                htmlContainer: 'dark-html',
+                actions: 'dark-actions',
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -82,18 +84,24 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
     };
 
     return (
-        
+
         <div>
             {(review && review.id_resena) ? (
                 <div id='publicacion' >
                     <div>
                         <div id='headerPublicacion'>
-                            <a href={(review.correo === (stateUser && stateUser.user &&stateUser.user.correo)) ? (`/myaccount`) : (`/users/${review.nickname}`)}>
+                            <a onClick={() => {
+                                if (review.correo === (stateUser && stateUser.user && stateUser.user.correo)) {
+                                    navigate('/myaccount');
+                                } else {
+                                    navigate(`/users/${review.nickname}`, { state: { email: review.correo } });
+                                }
+                            }}>
                                 <div id='autorPublicacion'>
                                     <img src={review.avatar} />
                                     <div>
                                         <h2>{review.nickname}</h2>
-                                        <a href={`/game`}>
+                                        <a href={`/game/${review.id_juego}`}>
                                             <h4>{review.nombre}</h4>
                                         </a>
                                     </div>
@@ -102,7 +110,7 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
                             <div id='autorPublicacion'>
                                 <div>
                                     {((stateUser && stateUser.user && stateUser.user.correo === review.correo) && myaccount) ? (
-                                        <h2>{review.puntuacion}/10 <FontAwesomeIcon icon={faX} size='xl' style={{color: "#ff0000", margin:'10px', cursor:'pointer'}} onClick={confirmDelete}/></h2>
+                                        <h2>{review.puntuacion}/10 <FontAwesomeIcon icon={faX} size='xl' style={{ color: "#ff0000", margin: '10px', cursor: 'pointer' }} onClick={confirmDelete} /></h2>
                                     ) : (
                                         <h2>{review.puntuacion}/10</h2>
                                     )}
