@@ -526,3 +526,36 @@ p {
 .gameSelect {
     flex-direction: column;
 }
+
+/* Buscador de Juegos responsivo en la BD */
+
+#gameSearch {
+    position: relative;
+    width: 100%;
+}
+
+#dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--extra);
+    border: 1px solid var(--header);
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#dropdown li {
+    color: #333;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#dropdown li:hover {
+    background-color: var(--active);
+}
