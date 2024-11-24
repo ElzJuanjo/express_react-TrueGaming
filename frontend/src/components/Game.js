@@ -3,6 +3,7 @@ import { HeaderLogged } from './HeaderLogged';
 import { GameReviews } from './GameReviews';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Footer } from './Footer';
+import useSession from '../hooks/UseSession';
 
 export const Game = () => {
     const { id } = useParams()
@@ -10,13 +11,9 @@ export const Game = () => {
     const navigate = useNavigate();
 
     // RECUPERACIÓN DE LA SESIÓN
-    const [stateUser, setStateUser] = useState(null);
+    const stateUser = useSession()
 
     useEffect(() => {
-        const user = localStorage.getItem("LoggedUser");
-        if (user) {
-            setStateUser(JSON.parse(user));
-        }
         loadGame()
     }, []);
 
@@ -78,7 +75,7 @@ export const Game = () => {
                                 {(juego.promedio === null) ? (
                                     <h4>Sin Reseñas</h4>
                                 ) : (
-                                    <h4>{juego.promedio}</h4>
+                                    <h4>{String(juego.promedio).slice(0,4)}</h4>
                                 )}
                             </div>
                         </div>

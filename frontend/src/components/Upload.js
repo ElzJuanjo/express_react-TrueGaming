@@ -73,6 +73,20 @@ export const Upload = () => {
         });
     };
 
+    const confirmNotUpload = () => {
+        Swal.fire({
+            title: 'Tu reseña no se ha podido publicar :(',
+            icon: 'warning',
+            confirmButtonColor: 'red',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+                popup: 'dark-popup',
+                htmlContainer: 'dark-html',
+                actions: 'dark-actions',
+            },
+        })
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         let image = '';
@@ -110,19 +124,25 @@ export const Upload = () => {
             correo_autor: stateUser.user.correo,
         };
 
-        await fetch(
-            `http://localhost:4000/create/resena/titulo,id_juego,resena,puntuacion,imagen,correo_autor`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            }
-        );
+        if (game) {
+            await fetch(
+                `http://localhost:4000/create/resena/titulo,id_juego,resena,puntuacion,imagen,correo_autor`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                }
+            ).then(data => data.json()
+            ).catch(err => null);
+            confirmUpload();
+            sendNotifications();
+        } else {
+            confirmNotUpload();
+
+        }
         deleteNewGame();
-        confirmUpload();
-        sendNotifications();
     };
 
     const saveGame = async (juego) => {

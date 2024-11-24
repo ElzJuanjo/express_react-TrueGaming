@@ -23,3 +23,11 @@
 ## PENDIENTES
 
 * Panel de MI CUENTA (Proximo finde)
+
+## CAMBIOS NECESARIOS EN LA DB
+
+ALTER TABLE likes
+DROP CONSTRAINT fk_id_resena,
+ADD CONSTRAINT fk_id_resena
+FOREIGN KEY (id_resena) REFERENCES resena(id_resena)
+ON DELETE CASCADE;

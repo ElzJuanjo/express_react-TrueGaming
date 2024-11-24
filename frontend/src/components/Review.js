@@ -5,21 +5,18 @@ import { faComment, faX } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import Swal from 'sweetalert2';
+import useSession from '../hooks/UseSession';
 
 export const Review = ({ resena, myaccount, loadReviews }) => {
     const { id } = useParams()
 
     const navigate = useNavigate()
 
-    const [stateUser, setStateUser] = useState(null);
+    const stateUser = useSession()
     const [review, setReview] = useState({});
     const [id_review, setIdReview] = useState(id);
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("LoggedUser"));
-        if (user && user.loggedIn) {
-            setStateUser(user);
-        }
         if (resena) {
             setReview(resena)
             setIdReview(id)
@@ -50,7 +47,7 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
         }
     }
 
-    const deleteComment = async () => {
+    const deleteReview = async () => {
         const response = await fetch(`http://localhost:4000/delete/resena/id_resena/${encodeURIComponent(review.id_resena)}`, {
             method: 'POST'
         })
@@ -78,7 +75,7 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteComment();
+                deleteReview();
             }
         });
     };
@@ -90,23 +87,31 @@ export const Review = ({ resena, myaccount, loadReviews }) => {
                 <div id='publicacion' >
                     <div>
                         <div id='headerPublicacion'>
-                            <a onClick={() => {
-                                if (review.correo === (stateUser && stateUser.user && stateUser.user.correo)) {
-                                    navigate('/myaccount');
-                                } else {
-                                    navigate(`/users/${review.nickname}`, { state: { email: review.correo } });
-                                }
-                            }}>
-                                <div id='autorPublicacion'>
+                            <div id='autorPublicacion'>
+                                <a onClick={() => {
+                                    if (review.correo === (stateUser && stateUser.user && stateUser.user.correo)) {
+                                        navigate('/myaccount');
+                                    } else {
+                                        navigate(`/users/${review.nickname}`, { state: { email: review.correo } });
+                                    }
+                                }}>
                                     <img src={review.avatar} />
-                                    <div>
+                                </a>
+                                <div>
+                                    <a onClick={() => {
+                                        if (review.correo === (stateUser && stateUser.user && stateUser.user.correo)) {
+                                            navigate('/myaccount');
+                                        } else {
+                                            navigate(`/users/${review.nickname}`, { state: { email: review.correo } });
+                                        }
+                                    }}>
                                         <h2>{review.nickname}</h2>
-                                        <a href={`/game/${review.id_juego}`}>
-                                            <h4>{review.nombre}</h4>
-                                        </a>
-                                    </div>
+                                    </a>
+                                    <a href={`/game/${review.id_juego}`}>
+                                        <h4>{review.nombre}</h4>
+                                    </a>
                                 </div>
-                            </a>
+                            </div>
                             <div id='autorPublicacion'>
                                 <div>
                                     {((stateUser && stateUser.user && stateUser.user.correo === review.correo) && myaccount) ? (

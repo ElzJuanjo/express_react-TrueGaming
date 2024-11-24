@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Review } from './Review';
+import useSession from '../hooks/UseSession';
 
 export const GameReviews = ( { id }) => {
 
     const [filter, setFilter] = useState('r.fecha_resena');
-    const [stateUser, setStateUser] = useState(null)
+    const stateUser = useSession()
     const [reviews, setReviews] = useState([]);
-
-    useEffect(() => {
-        const user = localStorage.getItem("LoggedUser");
-        if (user) {
-            setStateUser(JSON.parse(user));
-        }
-    }, []);
 
     useEffect(() => {
         if (stateUser && stateUser.user && stateUser.user.correo) {

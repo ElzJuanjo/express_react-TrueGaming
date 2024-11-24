@@ -14,6 +14,7 @@ import { SearchIGDB } from './components/SearchIGDB';
 import { User } from './components/User';
 import { SearchGameInDB } from './components/SearchGameInDB';
 import { Game } from './components/Game';
+import { ChangeImg } from './components/ChangeImg';
 
 function App() {
   return (
@@ -32,8 +33,9 @@ function App() {
           <Route path="/users/:nickname" element={<User />} />
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/searchgame" element={<SearchIGDB />} />
-          <Route path="/searchgameindb" element={<SearchGameInDB />}></Route>
-          <Route path="/game/:id" element={<Game />}></Route>
+          <Route path="/searchgameindb" element={<SearchGameInDB />} />
+          <Route path="/game/:id" element={<Game />} />
+          <Route path="/changeimg" element={<ChangeImg />} />
         </Routes>
       </Router>
     </div>

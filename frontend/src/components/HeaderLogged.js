@@ -3,18 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useSession from '../hooks/UseSession';
 
 export const HeaderLogged = () => {
     const navigate = useNavigate();
 
     //RECUPERACIÓN DE USUARIO 
-    const [stateUser, setStateUser] = useState(null);
-    useEffect(() => {
-        const user = localStorage.getItem("LoggedUser");
-        if (user) {
-            setStateUser(JSON.parse(user));
-        }
-    }, [])
+    const stateUser = useSession()
 
     const confirmLoggout = () => {
         Swal.fire({

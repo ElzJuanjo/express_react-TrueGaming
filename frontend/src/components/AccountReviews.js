@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Review } from './Review';
+import useSession from '../hooks/UseSession';
 
 export const AccountReviews = ( {email,myaccount} ) => {
     // RECUPERACIÓN DE LA SESIÓN
-    const [stateUser, setStateUser] = useState(null);
+    const stateUser = useSession()
     const [filter, setFilter] = useState('r.fecha_resena');
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("LoggedUser"));
         const filter = 'r.fecha_resena';
         setFilter(filter);
-        if (user && user.loggedIn) {
-            setStateUser(user);
-        }
     }, [])
 
     useEffect(() => {

@@ -6,25 +6,24 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitch, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { Footer } from './Footer';
 import { AccountReviews } from './AccountReviews';
 import { useNavigate } from 'react-router-dom';
+import useSession from '../hooks/UseSession';
 
 
 export const MyAccount = () => {
 
+    const MySwal = withReactContent(Swal);
+
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
+    const [uploadType, setUploadType] = useState('file');
     const navigate = useNavigate();
 
     // GET SESSION
-    const [stateUser, setStateUser] = useState(null);
-    useEffect(() => {
-        const user = localStorage.getItem("LoggedUser");
-        if (user) {
-            setStateUser(JSON.parse(user));
-        }
-    }, [])
+    const stateUser = useSession()
 
     useEffect(() => {
         if (stateUser) {
@@ -116,7 +115,40 @@ export const MyAccount = () => {
 
                         break;
 
-                    // Aqui los campos
+                    // Youtube
+                    case 3:
+                        const newYoutube = await fetch(`http://localhost:4000/update/usuario/youtube/${encodeURIComponent(result.value)}/correo/${encodeURIComponent(stateUser.user.correo)}`, {
+                            method: 'POST'
+                        }).catch(err => null);
+
+                        if (newYoutube) {
+                            success = true;
+                        }
+
+                        break;
+                    // Discord
+                    case 4:
+                        const newDiscord = await fetch(`http://localhost:4000/update/usuario/discord/${encodeURIComponent(result.value)}/correo/${encodeURIComponent(stateUser.user.correo)}`, {
+                            method: 'POST'
+                        }).catch(err => null);
+
+                        if (newDiscord) {
+                            success = true;
+                        }
+
+                        break;
+
+                    //Twitch
+                    case 5:
+                        const newTwitch = await fetch(`http://localhost:4000/update/usuario/twitch/${encodeURIComponent(result.value)}/correo/${encodeURIComponent(stateUser.user.correo)}`, {
+                            method: 'POST'
+                        }).catch(err => null);
+
+                        if (newTwitch) {
+                            success = true;
+                        }
+
+                        break;
                 }
 
                 if (success) {
@@ -140,6 +172,27 @@ export const MyAccount = () => {
                     }).then(res => {
                         window.location.reload();
                     });
+                } else {
+                    const newStorage = await fetch(`http://localhost:4000/read/usuario/correo/${encodeURIComponent(stateUser.user.correo)}`)
+                        .then(data => data.json()).catch(err => null);
+
+                    newStorage.contrasena = ""
+                    const stateData = { user: newStorage, loggedIn: true }
+                    localStorage.setItem("LoggedUser", JSON.stringify(stateData))
+
+                    Swal.fire({
+                        title: 'Algo ha salido mal',
+                        icon: 'warning',
+                        confirmButtonColor: 'green',
+                        confirmButtonText: 'Aceptar',
+                        customClass: {
+                            popup: 'dark-popup',
+                            htmlContainer: 'dark-html',
+                            actions: 'dark-actions',
+                        },
+                    }).then(res => {
+                        window.location.reload();
+                    });
                 }
 
             }
@@ -151,7 +204,19 @@ export const MyAccount = () => {
     }
 
     const changeBio = () => {
-        swalFire("Cambiar Biografía", "textarea", "Bio", [10, 40], 2);
+        swalFire("Cambiar Biografía", "textarea", "Bio", [0, 200], 2);
+    }
+
+    const changeYoutube = () => {
+        swalFire("Cambiar Youtube", "textarea", "Youtube", [10, 200], 3);
+    }
+
+    const changeDiscord = () => {
+        swalFire("Cambiar Discord", "textarea", "Discord", [10, 200], 4);
+    }
+
+    const changeTwitch = () => {
+        swalFire("Cambiar Twitch", "textarea", "Twitch", [10, 200], 5);
     }
 
     return (
@@ -164,11 +229,11 @@ export const MyAccount = () => {
                         <img src={stateUser && stateUser.user && stateUser.user.avatar} />
                         <div className='itemInfo'>
                             <div className='edit'>
-                                <h1>{stateUser && stateUser.user && stateUser.user.nickname} <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeNickname} /></h1>
+                                <h1>{stateUser && stateUser.user && stateUser.user.nickname} 
+                                <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeNickname} /></h1>
                             </div>
                             <div className='edit'>
                                 <h3>{stateUser && stateUser.user && stateUser.user.correo} </h3>
-
                             </div>
                             <div className='edit'>
                                 <h4>True Gamer desde: {stateUser && stateUser.user && stateUser.user.fecha_creacion.slice(0, 10)}</h4>
@@ -193,25 +258,45 @@ export const MyAccount = () => {
                     <div className='usuarioInfo'>
                         <div className='itemInfo'>
                             <div className='edit'>
-                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.youtube !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
+                                {(stateUser && stateUser.user && stateUser.user.youtube !== null) ? (
+                                    <a href={stateUser.user.youtube}>
+                                        <FontAwesomeIcon id='icon' icon={faYoutube} size="2xl" />
+                                    </a>
+                                ) : (
+                                    <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.youtube !== null) ? ('icon') : ('iconDisabled')} icon={faYoutube} size="2xl" />
+                                )}
                             </div>
-                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeYoutube} />
                         </div>
                         <div className='itemInfo'>
                             <div className='edit'>
-                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.discord !== null) ? ('icon') : ('iconDisabled')} icon={faDiscord} size="2xl" />
+                                {(stateUser && stateUser.user && stateUser.user.discord !== null) ? (
+                                    <a href={stateUser.user.discord}>
+                                        <FontAwesomeIcon id='icon' icon={faDiscord} size="2xl" />
+                                    </a>
+                                ) : (
+                                    <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.discord !== null) ? ('icon') : ('iconDisabled')} icon={faDiscord} size="2xl" />
+                                )}
                             </div>
-                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeDiscord} />
                         </div>
                         <div className='itemInfo'>
                             <div className='edit'>
-                                <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.twitch !== null) ? ('icon') : ('iconDisabled')} icon={faTwitch} size="2xl" />
+                                {(stateUser && stateUser.user && stateUser.user.twitch !== null) ? (
+                                    <a href={stateUser.user.twitch}>
+                                        <FontAwesomeIcon id='icon' icon={faTwitch} size="2xl" />
+                                    </a>
+                                ) : (
+                                    <FontAwesomeIcon id={(stateUser && stateUser.user && stateUser.user.twitch !== null) ? ('icon') : ('iconDisabled')} icon={faTwitch} size="2xl" />
+                                )}
                             </div>
-                            <FontAwesomeIcon id="icon" icon={faPenToSquare} />
+                            <FontAwesomeIcon id="icon" icon={faPenToSquare} onClick={changeTwitch} />
                         </div>
                     </div>
                     <div>
-                        <button>Cambiar Foto</button>
+                        <a href='/changeimg'>
+                            <button>Cambiar Foto</button>
+                        </a>
                         <button>Cambiar Contrasena</button>
                     </div>
                 </div>

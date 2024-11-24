@@ -257,11 +257,15 @@ button:hover {
 
 #iconAccount {
     border-radius: 100%;
-    width: 12.5%;
+    max-width: 9vh;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 5px var(--medio);
+}
+#iconAccount:hover {
+    box-shadow: 0 0 20px var(--active);
+    transition: 1s ease;
 }
 
 #icon {
@@ -283,6 +287,7 @@ button:hover {
     margin: 0;
     border: 0;
     border-radius: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 #panel {
@@ -304,7 +309,6 @@ button:hover {
 /* REVIEWS */
 #publicacion {
     background: var(--articulo);
-    margin: 20px;
     padding: 20px;
     box-shadow: 0 0 5px #000;
     display: flex;
@@ -325,23 +329,39 @@ button:hover {
     align-items: center;
 }
 
-#headerPublicacion a {
+#headerPublicacion a{
     text-decoration: none;
 }
 
 #autorPublicacion {
     display: flex;
-    align-items: center;
+}
+
+#autorPublicacion a {
+    width: 10%;
+    margin: auto 10px;
+}
+#autorPublicacion a h2:hover {
+    color: var(--active);
+    transition: 1s;
+}
+#autorPublicacion a h4:hover {
+    color: var(--active);
+    transition: 1s;
 }
 
 #autorPublicacion img {
-    width: 10%;
+    min-width: 100%;
     border-radius: 100%;
-    margin-right: 10px;
+    aspect-ratio: 1/1;
+}
+#autorPublicacion img:hover {
+    box-shadow: 0 0 20px var(--active);
+    transition: 1s;
 }
 
 #autorPublicacion div {
-    line-height: 0.5;
+    line-height: 0;
 }
 
 #detallesPublicacion {
